@@ -1,7 +1,0 @@
-If you would like to learn more about or cite the techniques PyProb uses, please see the following papers:
-
-* Baydin, Atılım Güneş, Lei Shao, Wahid Bhimji, Lukas Heinrich, Lawrence F. Meadows, Jialin Liu, Andreas Munk, Saeid Naderiparizi, Bradley Gram-Hansen, Gilles Louppe, Mingfei Ma, Xiaohui Zhao, Philip Torr, Victor Lee, Kyle Cranmer, Prabhat, and Frank Wood. 2019. “Etalumis: Bringing Probabilistic Programming to Scientific Simulators at Scale.” In Proceedings of the International Conference for High Performance Computing, Networking, Storage, and Analysis (SC19), November 17–22, 2019. [arXiv:1907.03382](https://arxiv.org/abs/1907.03382)
-
-* Baydin, Atılım Güneş, Lukas Heinrich, Wahid Bhimji, Lei Shao, Saeid Naderiparizi, Andreas Munk, Jialin Liu, Bradley Gram-Hansen, Gilles Louppe, Lawrence Meadows, Philip Torr, Victor Lee, Prabhat, Kyle Cranmer, and Frank Wood. 2019. “Efficient Probabilistic Inference in the Quest for Physics Beyond the Standard Model.” In Advances in Neural Information Processing Systems 33 (NeurIPS). [arXiv:1807.07706](https://arxiv.org/abs/1807.07706)
-
-* Le, Tuan Anh, Atılım Güneş Baydin, and Frank Wood. 2017. “Inference Compilation and Universal Probabilistic Programming.” In Proceedings of the 20th International Conference on Artificial Intelligence and Statistics (AISTATS), 54:1338–1348. Proceedings of Machine Learning Research. Fort Lauderdale, FL, USA: PMLR. [arXiv:1610.09900](https://arxiv.org/abs/1610.09900)
