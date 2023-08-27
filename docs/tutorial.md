@@ -80,9 +80,9 @@ $$
 
 $$
 \begin{align*}
-    {p(\vx)} &= \int d\vv ~p(\vx, \vv) = 1/Z' \int {\color{red} d\vv} ~{\color{blue} \delta\left(E(\vx) + d/2 \log v^2/d - c\right)} \\
-    &= 1/Z' \int {\color{red} J(\bm \phi)~d\bm \phi~ \rho^{d-1}~d\rho} ~ {\color{blue} \delta\left(E(\vx) + d \log \rho - c -d/2 \log d \right)} \\
-    &= 1/Z' \int {\color{red} J(\bm \phi)~d\bm \phi~ \rho^{d-1}~d\rho} ~{\color{blue} \rho/d ~ \delta(\rho - e^{-E(\vx)/d + c/d + \half \log d})} = {e^{-E(\vx)} / Z} ~~~~
+    {p(\vx)} &= \int d\vv ~p(\vx, \vv) = 1/Z' \int { d\vv} ~{ \delta\left(E(\vx) + d/2 \log v^2/d - c\right)} \\
+    &= 1/Z' \int { J(\bm \phi)~d\bm \phi~ \rho^{d-1}~d\rho} ~ { \delta\left(E(\vx) + d \log \rho - c -d/2 \log d \right)} \\
+    &= 1/Z' \int { J(\bm \phi)~d\bm \phi~ \rho^{d-1}~d\rho} ~{ \rho/d ~ \delta(\rho - e^{-E(\vx)/d + c/d + \half \log d})} = {e^{-E(\vx)} / Z} ~~~~
 \end{align*}
 $$
 
@@ -93,6 +93,7 @@ The Hamiltonian ODE then gives:
 $$
 \dot x = v/(v^2/d)
 $$
+
 $$
 \dot v = -\partial_xE(x)
 $$
