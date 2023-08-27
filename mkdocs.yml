@@ -121,8 +121,6 @@ nav:
   - Home: 
     - Home: index.md
     - References: references.md
-    - Authors: authors.md
-  - Get Started: get_started.md
+  - Applications: applications.md
   - Tutorial: tutorial.md
-  - Developer Guide: dev_guide.md
   

@@ -132,7 +132,7 @@ It is a standard result (see
 
 ## Time rescaling
 
-# 🚧 Under construction 🚧
+## 🚧 Under construction 🚧
 
 Numerical integration of the SDE requires a small step size because the movement changes direction quickly at high speed.
 
@@ -144,11 +144,12 @@ Instead, one can rescale time to a natural parameter, such that each step moves 
 
 ## Showing that the stationary distribution obtains
 
-They sketch a proof that the stationary distribution is 
-    todo
-    as follows
+## 🚧 Under construction 🚧
 
 ## Choosing the integrator
+
+## 🚧 Under construction 🚧
+
 
 One choice is the standard 2nd order leapfrog integrator, which is sympletic (see [these notes](/maths/numericalintegration)).
 
@@ -242,7 +243,7 @@ def update_momentum(d, eps):
   return update
 ```
 
-todo explain
+TODO: explain code
 
 ## Use with SMC
 
