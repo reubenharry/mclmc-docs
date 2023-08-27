@@ -62,8 +62,6 @@ The short proof comes from the beginning of section 2.1 [here](https://arxiv.org
 
 $$
 p(x) \propto \int_{\mathbb{R}^d} \delta(H(x, p) - E) d p = 
-
-% \frac{\Omega_{d-1} \Pi^{d-1}}{\vert \partial_{p} H\vert},
 $$
 
 $$
@@ -78,7 +76,6 @@ $$
 \newcommand{\half}{\frac{1}{2}}
 \newcommand{\eps}{\epsilon}
 \newcommand{\epshalf}{\nicefrac{\eps}{2}}
-
 $$
 
 $$
