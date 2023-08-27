@@ -106,8 +106,6 @@ $$
 
 This differs from $T(z) = \frac{d}{2}\log(\frac{z^2}{d}) = d\log z - \frac{d}{2}\log(d)$ by a scaling and constant term.
 
-TODO: scaling?
-
 More esoteric choices like the relavitistic Hamiltonian (which is non-separable) are considered in the paper too.
 
 <!-- To see this, note that the integral can be converted into (hyper)spherical coordinates. The angular part of the integral can be evaluated separately (we assume a rotationally symmetric $H$), giving the numerator. -->
@@ -134,16 +132,15 @@ It is a standard result (see
 
 ## Time rescaling
 
+# 🚧 Under construction 🚧
+
 Numerical integration of the SDE requires a small step size because the movement changes direction quickly at high speed.
 
 Instead, one can rescale time to a natural parameter, such that each step moves by the same length on the manifold.
 
-This takes us out of the symplectic (Hamiltonian) setting, and indeed the eventual resulting SDE will have a stationary distribution that does not resemble
-    but since it is equivalent to the desired target up to rescaling, we're good.
+<!-- This takes us out of the symplectic (Hamiltonian) setting, and indeed the eventual resulting SDE will have a stationary distribution that does not resemble -->
 
-todo 
-
-The consequence of this is that the integrator must be rederived, using the standard 
+<!-- The consequence of this is that the integrator must be rederived, using the standard  -->
 
 ## Showing that the stationary distribution obtains
 
