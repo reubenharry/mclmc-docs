@@ -20,7 +20,7 @@ However, if equilibrium thermodynamic information is the goal, the dynamics need
 
 We apply MD to two standard systems:
 
-1. Alanine Dipeptide (AD): [notebook](si.html)
-2. Silicon Crystal: [notebook](ad_mclmc_clean.html)
+1. Alanine Dipeptide (AD): [notebook](ad_mclmc_clean.html)
+2. Silicon Crystal: [notebook](si.html)
 
 Both of these examples use [Jax MD](https://github.com/jax-md/jax-md), which interplays nicely with the Jax implementation of MCLMC. Periodic boundary conditions need to be applied (which requires no modification of the sampling code, but a change to the potential), and for notebook 2, a neighbour list needs to be calculated every so often (which currently is done via a modification of the sampling code). Other than this, MCLMC works here as normal.
