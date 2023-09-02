@@ -1,14 +1,28 @@
 
-[Robnik, De Luca, Silverstein and Seljak](https://arxiv.org/pdf/2212.08549.pdf)
 
-https://proceedings.neurips.cc/paper_files/paper/2015/file/9a4400501febb2a95e79248486a5f6d3-Paper.pdf
+## Gradient Based MCMC
 
-https://arxiv.org/pdf/1701.02434.pdf
+### Hamiltonian Monte Carlo 
 
-https://arxiv.org/pdf/2212.08549.pdf
+[An introduction](https://arxiv.org/pdf/1701.02434.pdf)
 
-https://arxiv.org/pdf/2303.18221.pdf
+### Microcanonical Hamiltonian Monte Carlo
 
-https://proceedings.neurips.cc/paper/2021/file/5b970a1d9be0fd100063fd6cd688b73e-Paper.pdf
+[Hamiltonian Dynamics with Non-Newtonian Momentum for Rapid Sampling](https://arxiv.org/pdf/2111.02434.pdf)
 
-https://arxiv.org/pdf/2111.02434.pdf
+[Microcanonical Hamiltonian Monte Carlo (Robnik, De Luca, Silverstein and Seljak)](https://arxiv.org/pdf/2212.08549.pdf)
+
+[A Complete Recipe for Stochastic Gradient MCMC](https://proceedings.neurips.cc/paper/2021/file/5b970a1d9be0fd100063fd6cd688b73e-Paper.pdf)
+
+[Microcanonical Langevin Monte Carlo](https://arxiv.org/pdf/2303.18221.pdf)
+
+
+## Sequential Monte Carlo Samplers
+
+[Overview (Probabilistic Machine Learning: Advanced Topics)](https://probml.github.io/pml-book/book2.html)
+
+[A detailed introduction](https://www.stats.ox.ac.uk/~doucet/delmoral_doucet_jasra_sequentialmontecarlosamplersJRSSB.pdf)
+
+## Numerical Integrators
+
+[Symplectic integrators](https://arxiv.org/pdf/hep-lat/0505020.pdf)

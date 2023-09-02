@@ -1,5 +1,7 @@
 # Microcanonical Monte Carlo
 
-[Microcanonical Hamiltonian Monte Carlo]() (MCHMC) and its generalization [Microcanonical Langevin Monte Carlo]() (MCLMC) constitute a new sampling algorithm for problems with differentiable potentials.
+[Microcanonical Hamiltonian Monte Carlo](references) (MCHMC) and its generalization Microcanonical Langevin Monte Carlo (MCLMC) constitute a new sampling algorithm for distributions with differentiable log likelihoods.
 
-This website exists as a supplement to those papers, in order to explain [the theory behind the algorithm](tutorial.md) in more detail, and document [a variety of applications](applications.md) to which it can be applied.
+This website exists as a supplement to those papers, in order to explain [the theory behind the algorithm](tutorial.md) in more detail, and document [a variety of applications](applications.md) to which it is presently being applied.
+
+See [here](https://github.com/JakobRobnik/MicroCanonicalHMC) for an implementation in Jax (a Python library).

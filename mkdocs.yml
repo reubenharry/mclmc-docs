@@ -120,7 +120,16 @@ markdown_extensions:
 nav:
   - Home: 
     - Home: index.md
-    - References: references.md
+  - Tutorial: 
+    - Tutorial: tutorial.md
+    - Implementation: implementation.md
+    - Tuning: tuning.md
+    - Differential Geometry: diffgeo.md
+    - Ensemble algorithm: ensemble.md
   - Applications: applications.md
-  - Tutorial: tutorial.md
+  - Supplementary material:
+    - Index: supplementary.md
+    - SMC: smc.md
+    - Symplectic Integrators: integrators.md
+  - References: references.md
   

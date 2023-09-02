@@ -1,6 +1,6 @@
 # Applications
 
-## Standard Test Problems
+## Standard Benchmarks
 
 🚧 Under construction 🚧
 

@@ -14,6 +14,9 @@ $$
 
 # Microcanonical Monte Carlo Tutorial
 
+See the lefthand sidebar for further tutorials, and the righthand sidebar for the contents of this page.
+
+
 Broad prerequisites for this tutorial:
 
 - some familiarity with probability and Bayesian inference
@@ -50,7 +53,7 @@ What is proposed in [this paper](https://arxiv.org/pdf/2212.08549.pdf) is to ins
 [This paper](https://arxiv.org/pdf/2212.08549.pdf) and [this paper](https://arxiv.org/pdf/2303.18221.pdf) establish the requisite properties of these inference algorithms, consider appropriate choices of $H$ and kinetic energy to ensure the right marginal, sketch a proof that the stationary distribution is $q$ and show that it works very well both on toy problems and simple real ones.
 
 
-## Choosing $H$
+## Choosing H
 
 The simplest case is a separable $H$. [This paper](https://proceedings.neurips.cc/paper/2021/file/5b970a1d9be0fd100063fd6cd688b73e-Paper.pdf) proposes the following choice: 
 
@@ -183,74 +186,9 @@ This integrator is not sympletic
 ). -->
 <!-- As a result, the action of the Lagrangian is the expected energy. But since the defining feature of the true trajectory is that it minimizes the action, small variations like the numerical trajectory should be very close in action, and thus have almost the same expected energy. Empirically, this line of argument is made plausible by the fact that non-symplectic integrators (e.g. RK4) work fine. -->
 
-## Geometric intuition
-
-🚧 Under construction 🚧
-
-
-## More abstract formulation
-
-In a [further paper](https://arxiv.org/pdf/2303.18221.pdf), Robnik and Seljak offer a simpler form of the SDE derived by time rescaling of the microcanonical SDE, and proof that it is stationary. This section makes use of tools from differential geometry.
-
-They begin with the simpler case of the following ODE:
-
-$$
-\frac{d}{dt}\begin{bmatrix}
-x \\
-u
-\end{bmatrix}
-=
-\begin{bmatrix}
-u \\
-(I - uu^T)(−\nabla S(x)/(d − 1))
-\end{bmatrix}
-$$
-
-where $S(x) = -\log p(x)$, and $p$ is our target distribution.
-
-They first observe that if $|u|=1$:
-
-$$
-\frac{d}{dt}(\langle u, u \rangle) = 2(u \cdot \dot u) = = (1 − \langle u, u \rangle)C = 0
-$$
-
-This constrains the flow of the ODE to a $2d-1$ dimensional manifold.
-
-The marginal probability under the flow at time $t$ can be represented on the manifold by a top form $\rho(z)dz^1\wedge ...dz^{2d-1}$.
-
-🚧 Under construction 🚧
-
-## Implementation
-
-There is a Jax implementation of the code [here](todo). In particular, this is the momentum update:
-
-```python
-def update_momentum(d, eps):
-    
-  def update(u, g):
-      g_norm = jnp.sqrt(jnp.sum(jnp.square(g)))
-      e = - g / g_norm
-      ue = jnp.dot(u, e)
-      delta = eps * g_norm / (d-1)
-      zeta = jnp.exp(-delta)
-      uu = e *(1-zeta)*(1+zeta + ue * (1-zeta)) + 2*zeta* u
-      delta_r = delta - jnp.log(2) + jnp.log(1 + ue + (1-ue)*zeta**2)
-      return uu/jnp.sqrt(jnp.sum(jnp.square(uu))), delta_r
-  
-  return update
-```
-
-🚧 Under construction: explain code 🚧
-
-## Autotuning
-
-🚧 Under construction 🚧
-
 
 ## Use with SMC
 
-The speed of the mode finding behavior suggests that MCLMC would work well in concert with annealing, and in particular with Sequential Monte Carlo. The idea is that an initial high temperature (which here means an inverse multiplicative factor on $\log p(x)$) allows for mode exploration, which is subsequently lowered to the target temperature.
+The speed of the mode finding behavior suggests that MCLMC would work well in concert with annealing, and in particular with [Sequential Monte Carlo](smc.md). The idea is that an initial high temperature (which here means an inverse multiplicative factor on $\log p(x)$) allows for mode exploration, which is subsequently lowered to the target temperature.
 
-## Ensemble method
 
-🚧 Under construction 🚧
