@@ -142,6 +142,7 @@ Numerical integration of the SDE requires a small step size because the movement
 
 ## Showing that the stationary distribution obtains
 
+We will show
 🚧 Under construction 🚧
 
 
