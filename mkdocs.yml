@@ -122,6 +122,7 @@ nav:
     - Home: index.md
   - Tutorial: 
     - Tutorial: tutorial.md
+    - Choice of Integrator: choice_of_integrator.md
     - Implementation: implementation.md
     - Tuning: tuning.md
     - Differential Geometry: diffgeo.md

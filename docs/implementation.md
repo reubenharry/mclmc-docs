@@ -18,6 +18,17 @@ def update_momentum(d, eps):
   return update
 ```
 
+Recall from the [tutorial](choice_of_integrator.md) that the momentum update should be:
+
+$$
+    u \mapsto 
+    \frac{u + (\sinh{(\delta)}+ {e} \cdot u (\cosh (\delta) -1)) {e} }{\cosh{(\delta)} + {e} \cdot u \sinh{(\delta)}}   
+$$
+
+where $\delta = \epsilon \vert \nabla E(x) \vert / d$ and ${e} = - \nabla E(x) / \vert \nabla E(x) \vert$.
+
+If we implement this directly, we find:
+
 🚧 Under construction: add explanations  🚧
 
 The leapfrog integrator described in the [supplementary material](integrators.md) can be defined like so (with some extra values passed along like the change in log likelihood):

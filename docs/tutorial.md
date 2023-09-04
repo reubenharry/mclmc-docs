@@ -14,14 +14,15 @@ $$
 
 # Microcanonical Monte Carlo Tutorial
 
-See the lefthand sidebar for further tutorials, and the righthand sidebar for the contents of this page.
+!!! Note 
+    See the lefthand sidebar for further tutorials, and the righthand sidebar for the contents of this page.
 
 
-Broad prerequisites for this tutorial:
+??? Prerequisites
 
-- some familiarity with probability and Bayesian inference
-- general knowledge of Markov chain Monte Carlo methods
-- basic understanding of linear ordinary differential equations (in particular, the Hamiltonian ODE of classical physics)
+    - some familiarity with probability and Bayesian inference
+    - general knowledge of Markov chain Monte Carlo methods
+    - basic understanding of linear ordinary differential equations (in particular, the Hamiltonian ODE of classical physics)
 
 ## Overview
 
@@ -142,49 +143,6 @@ Numerical integration of the SDE requires a small step size because the movement
 ## Showing that the stationary distribution obtains
 
 🚧 Under construction 🚧
-
-## Choosing the integrator
-
-🚧 Under construction 🚧
-
-
-One choice is the standard 2nd order leapfrog integrator, which is sympletic (see [these notes](/maths/numericalintegration)).
-
-The fancier minimal norm integrator discussed [here](https://arxiv.org/pdf/hep-lat/0505020.pdf) turns out to work well in practice.
-
-$$
-\Phi_{\epsilon} = \Phi_{\epsilon \lambda}^{V} \circ \Phi_{\epsilon/2}^{T}\circ \Phi_{\epsilon (1-2\lambda)}^{V} \circ \Phi_{\epsilon/2}^{T} \circ \Phi_{\epsilon \lambda}^{V}
-$$
-
-with $\lambda = 0.19318...$.
-
-A crucial caveat is that, while for Hamiltonian ODE (i.e. $\frac{d}{dt}x = \{x,H\}$), we have $\Phi^{V} = e^{\{\cdot, V\}}$ and $\Phi^{T} = e^{\{\cdot, T\}}$, which are simple to calculate for the standard Hamiltonian, our equation of interest is now
-
-🚧 Under construction 🚧
- 
-so the form of the updates needs to be rederived appropriately. This yields a fairly scary looking update:
-
-$$
-    \Phi^T_{\epsilon}(x, u, w) = (x + \epsilon u, u, w)
-$$
-
-$$
-    \Phi_{\epsilon}^V(x, u, w) = \bigg( x, \,
-    \frac{u + (\sinh{\delta}+ {e} \cdot u (\cosh \delta -1)) {e} }{\cosh{\delta} + {e} \cdot u \sinh{\delta}}, \,
-    w \,(\cosh \delta + {e} \cdot u \sinh \delta) \bigg) 
-$$
-
-where $\delta = \epsilon \vert \nabla E(x) \vert / d$ and ${e} = - \nabla E(x) / \vert \nabla E(x) \vert$.
-
-This integrator is not sympletic
-
-🚧 Check this assertion 🚧
-
-<!-- Robnik et al. conjecture that this doesn't matter. They observe that the Lagrangian of the Hamiltonian in question is the same as the Hamiltonian itself (
-        via todo Legendre
-        up to a constant
-). -->
-<!-- As a result, the action of the Lagrangian is the expected energy. But since the defining feature of the true trajectory is that it minimizes the action, small variations like the numerical trajectory should be very close in action, and thus have almost the same expected energy. Empirically, this line of argument is made plausible by the fact that non-symplectic integrators (e.g. RK4) work fine. -->
 
 
 ## Use with SMC
