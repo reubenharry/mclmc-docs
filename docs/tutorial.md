@@ -139,21 +139,18 @@ ESH integrator in the rescaled time is not symplectic, but we will here show tha
 Hamiltonian dynamics can equivalently be described as the Lagrangian dynamics. Lagrangian is a Legendre transform of the Hamiltonian:
 
 $$
-L = \boldsymbol{\Pi} \cdot \dot{\boldsymbol{x}} - H(\boldsymbol{x}, \boldsymbol{\Pi}) 
+L(\boldsymbol{x}, \dot{\boldsymbol{x}})  = \boldsymbol{\Pi} \cdot \dot{\boldsymbol{x}} - H(\boldsymbol{x}, \boldsymbol{\Pi}) ,
 $$
-
-which for the MCHMC Hamiltonian yields 
+where $$\boldsymbol{\Pi}$$ is to be understood as a function of $$\dot{\boldsymbol{x}} = \frac{\partial H}{\partial \boldsymbol{Pi}}$$, in the present case $$\boldsymbol{\Pi} = d \boldsymbol{Pi} / \vert \boldsymbol{Pi} \vert$$, so we get
 
 $$ L = d - H $$
 
-or since the Lagrangian formalism is invariant to rescaling and shifting:
-
-$$L' = H$$.
+or since the Lagrangian formalism is invariant to rescaling and shifting, we can take $$L = H$$.
 
 This is a very special property: Lagrangian equals the Hamiltonian.
 Lagrangian dynamics states that the solution flows are the functional extrema of the action, which is the time integral of the Lagrangian
 
-$$S = \int dt L(boldsymbol{x}(t), \dot{boldsymbol{x}}(t))$$
+$$S = \int dt L(\boldsymbol{x}(t), \dot{\boldsymbol{x}}(t))$$
 
 In our case, action equals the exepcted energy, meaning that the expected energy does not change if we slighlty perturb the exact solution. This means that numerical solutions must preserve the expected energy well.
 
