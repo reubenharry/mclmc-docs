@@ -117,6 +117,13 @@ More esoteric choices like a relavitistic Hamiltonian (which is non-separable) a
 
 The Hamiltonian yields a deterministic process, but doesn't give an ergodicity guarantee. [Robnik et al.](https://arxiv.org/pdf/2212.08549.pdf) proposes adding momentum changes after every L steps, which preserve the norm, and hence the energy, but make the process ergodic.
 
+They then generalize the previous approach by specifying an SDE (instead of the previous ODE) which continuously varies the momentum stochastically, according to:
+
+$$
+\ddot x = -\nabla V(x) - \gamma \dot X + (2\gamma)^{\frac{1}{2}}B
+$$
+
+where $B$ is Brownian. This can be reduced to a first order Langevin SDE, and solved as:
 
 🚧 Under construction 🚧
 
@@ -136,6 +143,27 @@ Numerical integration of the SDE requires a small step size because the movement
 ## Showing that the stationary distribution obtains
 
 🚧 Under construction 🚧
+
+
+## Integrator stability
+
+Symplecting integrators are argued to be long-term stable, becuase they are the exact Hamiltonian flows of the so-called shadow Hamiltonian, which is for a small stepsize usually similar to the original Hamiltonian. They exactly preserve the shadow Hamiltonian, which forces stability. 
+
+ESH integrator in the rescaled time is not symplectic, but we will here show that the MCHMC Hamiltonian poseses an extrodinary propery, which also suggests stability. 
+
+Hamiltonian dynamics can equivalently be described as the Lagrangian dynamics. Lagrangian is a Legendre transform of the Hamiltonian:
+
+$$
+L = \boldsymbol{\Pi} \cdot \dot{\boldsymbol{x}} - H(\boldsymbol{x}, \boldsymbol{\Pi}) 
+$$
+which for the MCHMC Hamiltonian yields 
+$$ L = d - H $$
+or since the Lagrangian formalism is invariant to rescaling and shifting:
+$$L' = H$$.
+This is a very special property: Lagrangian equals the Hamiltonian.
+Lagrangian dynamics states that the solution flows are the functional extrema of the action, which is the time integral of the Lagrangian
+$$S = \int dt L(boldsymbol{x}(t), \dot{boldsymbol{x}}(t))$$.
+In our case, action equals the exepcted energy, meaning that the expected energy does not change if we slighlty perturb the exact solution. This means that numerical solutions must preserve the expected energy well.
 
 
 ## Use with SMC
