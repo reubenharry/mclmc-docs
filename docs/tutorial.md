@@ -145,6 +145,27 @@ Numerical integration of the SDE requires a small step size because the movement
 🚧 Under construction 🚧
 
 
+## Integrator stability
+
+Symplecting integrators are argued to be long-term stable, becuase they are the exact Hamiltonian flows of the so-called shadow Hamiltonian, which is for a small stepsize usually similar to the original Hamiltonian. They exactly preserve the shadow Hamiltonian, which forces stability. 
+
+ESH integrator in the rescaled time is not symplectic, but we will here show that the MCHMC Hamiltonian poseses an extrodinary propery, which also suggests stability. 
+
+Hamiltonian dynamics can equivalently be described as the Lagrangian dynamics. Lagrangian is a Legendre transform of the Hamiltonian:
+
+$$
+L = \boldsymbol{\Pi} \cdot \dot{\boldsymbol{x}} - H(\boldsymbol{x}, \boldsymbol{\Pi}) 
+$$
+which for the MCHMC Hamiltonian yields 
+$$ L = d - H $$
+or since the Lagrangian formalism is invariant to rescaling and shifting:
+$$L' = H$$.
+This is a very special property: Lagrangian equals the Hamiltonian.
+Lagrangian dynamics states that the solution flows are the functional extrema of the action, which is the time integral of the Lagrangian
+$$S = \int dt L(boldsymbol{x}(t), \dot{boldsymbol{x}}(t))$$.
+In our case, action equals the exepcted energy, meaning that the expected energy does not change if we slighlty perturb the exact solution. This means that numerical solutions must preserve the expected energy well.
+
+
 ## Use with SMC
 
 The speed of the mode finding behavior suggests that MCLMC would work well in concert with annealing, and in particular with [Sequential Monte Carlo](smc.md). The idea is that an initial high temperature (which here means an inverse multiplicative factor on $\log p(x)$) allows for mode exploration, which is subsequently lowered to the target temperature.
