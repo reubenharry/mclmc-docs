@@ -43,3 +43,31 @@ where $\delta = \epsilon \vert \nabla E(x) \vert / (d-1)$ and ${e} = - \nabla E(
 ). -->
 <!-- As a result, the action of the Lagrangian is the expected energy. But since the defining feature of the true trajectory is that it minimizes the action, small variations like the numerical trajectory should be very close in action, and thus have almost the same expected energy. Empirically, this line of argument is made plausible by the fact that non-symplectic integrators (e.g. RK4) work fine. -->
 
+## Integrator stability
+
+Symplecting integrators are argued to be long-term stable, becuase they are the exact Hamiltonian flows of the so-called shadow Hamiltonian, which is for a small stepsize usually similar to the original Hamiltonian. They exactly preserve the shadow Hamiltonian, which forces stability. 
+
+The ESH integrator in the rescaled time is not symplectic, but we will here show that the MCHMC Hamiltonian poseses an extrodinary propery, which also suggests stability. 
+
+Hamiltonian dynamics can equivalently be described with Lagrangian dynamics. The Lagrangian is a Legendre transform of the Hamiltonian:
+
+$$
+L = {\Pi} \cdot \dot{{x}} - H({x}, {\Pi}) 
+$$
+
+which for the MCHMC Hamiltonian yields 
+
+$$ L = d - H $$
+
+or since the Lagrangian formalism is invariant to rescaling and shifting:
+
+$$
+L' = H
+$$
+
+This is a very special property: **the Lagrangian equals the Hamiltonian**. The Lagrangian dynamics state that the solution flows are the functional extrema of the action, which is the time integral of the Lagrangian, namely
+
+$$S = \int dt L({x}(t), \dot{{x}}(t))$$
+
+In our case, the action equals the expected energy, meaning that the expected energy does not change if we slightly perturb the exact solution. This means that numerical solutions must preserve the expected energy well.
+
