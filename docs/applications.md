@@ -2,11 +2,11 @@
 
 ## Standard Benchmarks
 
-🚧 Under construction 🚧
+See code [here](https://github.com/JakobRobnik/MicroCanonicalHMC/tree/master/benchmarks), in particular [this file](https://github.com/JakobRobnik/MicroCanonicalHMC/blob/master/benchmarks/benchmarks_mchmc.py) for a list of standard benchmark applications, compared to HMC.
 
-## Lattice Quantum Chromodynamics
+## Lattice Field Theories
 
-🚧 Under construction 🚧
+See the later section of [this paper](https://arxiv.org/abs/2303.18221) for a comparison of MCLMC and HMC on a simple lattice field theory.
 
 ## Astrophysics
 
