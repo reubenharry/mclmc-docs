@@ -120,8 +120,9 @@ markdown_extensions:
 nav:
   - Home: 
     - Home: index.md
-  - Tutorial: 
-    - Tutorial: tutorial.md
+  - Get Started: getstarted.md
+  - Theory: 
+    - Basics: tutorial.md
     - Choice of Integrator: choice_of_integrator.md
     - Implementation: implementation.md
     - Tuning: tuning.md
