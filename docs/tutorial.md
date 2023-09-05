@@ -117,13 +117,6 @@ More esoteric choices like a relavitistic Hamiltonian (which is non-separable) a
 
 The Hamiltonian yields a deterministic process, but doesn't give an ergodicity guarantee. [Robnik et al.](https://arxiv.org/pdf/2212.08549.pdf) proposes adding momentum changes after every L steps, which preserve the norm, and hence the energy, but make the process ergodic.
 
-They then generalize the previous approach by specifying an SDE (instead of the previous ODE) which continuously varies the momentum stochastically, according to:
-
-$$
-\ddot x = -\nabla V(x) - \gamma \dot X + (2\gamma)^{\frac{1}{2}}B
-$$
-
-where $B$ is Brownian. This can be reduced to a first order Langevin SDE, and solved as:
 
 🚧 Under construction 🚧
 
