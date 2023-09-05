@@ -55,7 +55,10 @@ $$
 L = {\Pi} \cdot \dot{{x}} - H({x}, {\Pi}) 
 $$
 
-which for the MCHMC Hamiltonian yields 
+
+where ${\Pi}$ is to be understood as a function of $\dot{{x}} = \frac{\partial H}{\partial {\Pi}}$.
+
+In the present case ${\dot{x}} = \frac{d \Pi}{\vert {\Pi} \vert}$, so we get
 
 $$ L = d - H $$
 
