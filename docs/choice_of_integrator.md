@@ -31,9 +31,11 @@ $$
     w \,(\cosh \delta + {e} \cdot u \sinh \delta) \bigg) 
 $$
 
-where $\delta = \epsilon \vert \nabla E(x) \vert / d$ and ${e} = - \nabla E(x) / \vert \nabla E(x) \vert$.
+where $\delta = \epsilon \vert \nabla E(x) \vert / (d-1)$ and ${e} = - \nabla E(x) / \vert \nabla E(x) \vert$.[^2]
 
 [^1]: See the appendix of [Hamiltonian Dynamics with Non-Newtonian Momentum for Rapid Sampling](/references/#microcanonical-hamiltonian-monte-carlo) for a derivation.
+
+[^2]: Note that in the original paper, you'll see $d$, not $d-1$. The latter removes the need for the consideration of auxilliary weights; derivation is 🚧 under construction 🚧.
 
 <!-- Robnik et al. conjecture that this doesn't matter. They observe that the Lagrangian of the Hamiltonian in question is the same as the Hamiltonian itself (
         via todo Legendre
