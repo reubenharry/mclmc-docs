@@ -117,18 +117,7 @@ More esoteric choices like a relavitistic Hamiltonian (which is non-separable) a
 
 The Hamiltonian yields a deterministic process, but doesn't give an ergodicity guarantee. [Robnik et al.](https://arxiv.org/pdf/2212.08549.pdf) proposes adding momentum changes after every L steps, which preserve the norm, and hence the energy, but make the process ergodic.
 
-They then generalize the previous approach by specifying an SDE (instead of the previous ODE) which continuously varies the momentum stochastically, according to:
-
-$$
-\ddot x = -\nabla V(x) - \gamma \dot X + (2\gamma)^{\frac{1}{2}}B
-$$
-
-where $B$ is Brownian. This can be reduced to a first order Langevin SDE, and solved as:
-
-🚧 Under construction 🚧
-
-
-It is a standard result that the stationary distribution of the Langevin equation is the canonical distribution. 
+They subsequently offer a closely related algorithm where the momentum is changed continuously, under a stochastic process. Ergodicity can be proved here (see upcoming work).
 
 ## Time rescaling
 
@@ -139,10 +128,6 @@ Numerical integration of the SDE requires a small step size because the movement
 <!-- This takes us out of the symplectic (Hamiltonian) setting, and indeed the eventual resulting SDE will have a stationary distribution that does not resemble -->
 
 <!-- The consequence of this is that the integrator must be rederived, using the standard  -->
-
-## Showing that the stationary distribution obtains
-
-🚧 Under construction 🚧
 
 
 ## Integrator stability
@@ -156,13 +141,20 @@ Hamiltonian dynamics can equivalently be described as the Lagrangian dynamics. L
 $$
 L = \boldsymbol{\Pi} \cdot \dot{\boldsymbol{x}} - H(\boldsymbol{x}, \boldsymbol{\Pi}) 
 $$
+
 which for the MCHMC Hamiltonian yields 
+
 $$ L = d - H $$
+
 or since the Lagrangian formalism is invariant to rescaling and shifting:
+
 $$L' = H$$.
+
 This is a very special property: Lagrangian equals the Hamiltonian.
 Lagrangian dynamics states that the solution flows are the functional extrema of the action, which is the time integral of the Lagrangian
-$$S = \int dt L(boldsymbol{x}(t), \dot{boldsymbol{x}}(t))$$.
+
+$$S = \int dt L(boldsymbol{x}(t), \dot{boldsymbol{x}}(t))$$
+
 In our case, action equals the exepcted energy, meaning that the expected energy does not change if we slighlty perturb the exact solution. This means that numerical solutions must preserve the expected energy well.
 
 
