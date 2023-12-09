@@ -121,9 +121,7 @@ They subsequently offer a closely related algorithm where the momentum is change
 
 ## Time rescaling
 
-Numerical integration of the SDE requires a small step size because the movement changes direction quickly at high speed. Instead, one can rescale time to a natural parameter, such that each step moves by the same length on the manifold.
-
-The result is that we obtain a new differential equation, which is no longer symplectic:
+Suppose we use $T(u) = \frac{d}{2}\log(|u|^2/d)$. Hamilton's equations give:
 
 $$
 \frac{d}{dt}\begin{bmatrix}
@@ -132,12 +130,74 @@ u
 \end{bmatrix}
 =
 \begin{bmatrix}
-u \\
--P(u)(\nabla S(x)/(d − 1))
+\frac{u}{|u|}\frac{1}{w} \\
+-\nabla V(x)
 \end{bmatrix}
 $$
 
-However, we can study this equation in its own right, and this is the approach taken in the [Microcanonical Langevin Monte Carlo](https://arxiv.org/pdf/2303.18221.pdf) paper.
+where $w(t) = |u(t)|/d$.
+
+Numerical integration of the SDE requires a small step size because the position changes quickly at high $u$.
+
+To ameliorate the problem, one can rescale time to a natural parameter, such that each step moves by the same length on the manifold.
+
+Concretely, let $ds = dt/w(t)$.
+
+
+$$
+\frac{d}{ds}\begin{bmatrix}
+x \\
+u \\
+w
+\end{bmatrix}
+=
+\begin{bmatrix}
+u \\
+-P(u)(\nabla V(x)/d) \\
+-w u \cdot \nabla V(x) /d
+\end{bmatrix}
+$$
+
+with $\rho_\infty(x) * w_\infty(x) \propto e^{-V(x)}$. (@jakob: why? Also does it make sense for w to depend on x? Since $w = e^{(E-V(x))/d}$, it should, no?)
+
+We then note:
+
+$$
+H(x,u) =  \frac{d}{2}\log(|u|^2/d) + V(x) \\
+\Rightarrow w(x) = e^{(E-V(x))/d}
+$$
+
+so that
+
+$$
+\rho_\infty(x) \propto e^{(V(x))/d}e^{-V(x)} = e^{(1/d -1)V(x)} = e^{-((d-1)/d)V(x)}
+$$
+
+We then simply rescale $S$ by $d/(d-1)$ to obtain:
+
+$$
+S'(x) = \frac{d}{d-1} V(x)
+$$
+
+so that rederiving the equations from $S'$, we obtain:
+
+$$
+\frac{d}{ds}\begin{bmatrix}
+x \\
+u
+\end{bmatrix}
+=
+\begin{bmatrix}
+u \\
+-P(u)\nabla S(x)/(d-1) \\
+\end{bmatrix}
+$$
+
+Since now $\rho_\infty(x) = e^{-S(x)}$, we no longer need to keep track of the weights.
+
+Moreover, we can study this ODE in its own right, and this is the approach taken in the [Microcanonical Langevin Monte Carlo](https://arxiv.org/pdf/2303.18221.pdf) paper.
+
+It is no longer symplectic, and no longer has any (direct) relationship to a Hamiltonian.
 
 ## Stochasticity
 
