@@ -117,11 +117,27 @@ More esoteric choices like a relavitistic Hamiltonian (which is non-separable) a
 
 The Hamiltonian yields a deterministic process, but doesn't give an ergodicity guarantee. [Robnik et al.](https://arxiv.org/pdf/2212.08549.pdf) proposes completely changing the momentum direction after every $L$ steps, which preserve the norm, and hence the energy, but make the process ergodic.
 
-They subsequently offer a closely related algorithm where the momentum is changed partially at every step. 
+They subsequently offer a closely related algorithm where the momentum is changed partially at every step.
 
 ## Time rescaling
 
-Suppose we use $T(u) = \frac{d}{2}\log(|u|^2/d)$. Hamilton's equations give:
+With some thought, one can convert the MCHMC ODE with the logarithmic kinetic energy to the following form:
+
+$$
+\frac{d}{ds}\begin{bmatrix}
+x \\
+u
+\end{bmatrix}
+=
+\begin{bmatrix}
+u \\
+-P(u)\nabla S(x)/(d-1) \\
+\end{bmatrix}
+$$
+
+Here is how we get this.
+
+We begin by choosing $T(u) = \frac{d}{2}\log(|u|^2/d)$. Hamilton's equations give:
 
 $$
 \frac{d}{dt}\begin{bmatrix}
@@ -158,7 +174,7 @@ u \\
 \end{bmatrix}
 $$
 
-with $\rho_\infty(x) * w_\infty(x) \propto e^{-V(x)}$. (@jakob: why? Also does it make sense for w to depend on x? Since $w = e^{(E-V(x))/d}$, it should, no?)
+with $\rho_\infty(x) * w_\infty(x) \propto e^{-V(x)}$.
 
 We then note:
 
