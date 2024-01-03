@@ -215,13 +215,42 @@ Moreover, we can study this ODE in its own right, and this is the approach taken
 
 It is no longer symplectic, and no longer has any (direct) relationship to a Hamiltonian.
 
+## Discretization
+
+We must convert our differential equation into a discrete process
+
+$$
+step_\epsilon(x,u) \mapsto (f_\epsilon(x,u), g_\epsilon(x,u))
+$$
+
+where $\epsilon$, which has dimensions of time, is the amount forward in time that the step moves.
+
+The price of discretization is that our dynamics is only approximately equal to the ODE, so $step_\epsilon(x,u) \approx \phi_\epsilon(x,u)$. As $\epsilon \to 0$, they become equal, but the cost of running the algorithm goes up.
+
+See the [section on tuning](/theorydocs/docs/tuning.md) and the [section on the integrator](/theorydocs/docs/choice_of_integrator.md) for more information.
+
 ## Stochasticity
 
 The paper [Hamiltonian Dynamics with Non-Newtonian Momentum for Rapid Sampling](https://arxiv.org/pdf/2111.02434.pdf) proposes roughly the above equation, but this does not result in ergodicity. That is, while the target distribution is stationary, the flow may not converge to it.
 
 As a remedy, the paper [Microcanonical Hamiltonian Monte Carlo](https://arxiv.org/pdf/2212.08549.pdf) proposes to add either full stochastic momentum resampling every $n$ steps, or partial momentum changes every step.
 
-These changes are applied to the discrete random walk obtained from the ODE. However, it is natural to ask if one can formulate a *stochastic differential equation* (SDE) for which the discretization results in this same random walk. The benefit is that one can then analyze the properties of the SDE using more abstract tools. That is the topic of [Microcanonical Langevin Monte Carlo](https://arxiv.org/pdf/2303.18221.pdf). 
+Focusing on the latter, we do an update 
+
+$$
+z \sim \mathcal{N}(0,1) \\
+\Phi^O_{\epsilon, L}(x,u) = (x, n(u+z\sqrt{d^{-1}(e^{2\frac{\epsilon}{L}}-1)}))
+$$
+
+where $n(u) = \frac{u}{|u|}$, and $L$ is a parameter of our choosing with dimension of time (see the [section on tuning](/theorydocs/docs/tuning.md)). The reason for this curious looking expression is that it can be shown that 
+
+$$
+\langle step_\epsilon^n(u) \cdot u \rangle = e^{-\frac{\epsilon n}{L}}
+$$
+
+which means that the correlation between $u$ and the momentum at a time $n\cdot\epsilon$ later decays at a rate controlled by $L$. As $L$ increases, the time to decorrelate increases, so think of $L$ as the *decoherence time* of the momentum.
+
+These stochastic jumps are applied to the discrete random walk obtained from the ODE. However, it is natural to ask if one can formulate a *stochastic differential equation* (SDE) for which the discretization results in this same random walk. The benefit is that one can then analyze the properties of the SDE using more abstract tools. That is the topic of [Microcanonical Langevin Monte Carlo](https://arxiv.org/pdf/2303.18221.pdf). 
 
 
 
