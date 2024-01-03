@@ -33,8 +33,8 @@ where $(x,u)$ describes a point on a manifold $\mathcal{M}$ and $S(x) = -\log p(
 
 !!! Note 
     
-    Going forward, we'll write $(I - uu^T)(\nabla S(x)/(d − 1)) = P(u)f(x)$, to emphasize that $\dot u$ is described by a projection of a function of $x$.
-    <!-- onto a hypersphere, in the sense that the $u$ component of $f(x)$ is set to $0$. -->
+    Going forward, we'll write $-(I - uu^T)(\nabla S(x)/(d − 1)) = P(u)f(x)$, to emphasize that $\dot u$ is described by a projection of a function of $x$ onto an n-1 dimensional subspace.
+    
 
 As with any ODE, we obtain a flow $\phi : \mathbb{R} \to (\mathcal{M} \to \mathcal{M})$, i.e. the group action that takes $t \in \mathbb{R}$ to time evolutions of $\mathcal{M}$. That is, $\phi(s)(z(t)) = z(t+s)$.
 
@@ -98,11 +98,11 @@ $$
 $$
 
 
-We now put the continuity equation in our coordinates using [this formula](/geometry/#divergence), as:
+We now put the continuity equation in our coordinates using [this formula](/geometry/#divergence-in-coordinates), as:
 
 $$
 \frac{d}{dt}\rho_\infty = 
-- \big( \mathrm{div}_{{\rho}_\infty} {B} \big) {\rho}_\infty = \frac{1}{e^{-S(x)} \sqrt{g(\theta)}}((e^{-S(x)} \sqrt{g(\theta)})B^i)_{,i}
+- \big( \mathrm{div}_{{\rho}_\infty} {B} \big) {\rho}_\infty = \frac{1}{e^{-S(x)} \sqrt{g(\theta)}}((e^{-S(x)} \sqrt{g(\theta)})B^i)_{,i}\rho_\infty
 $$
 
 Proceeding further requires $B$ in coordinates, which is:
@@ -130,25 +130,50 @@ $$
 
 
 $$
-    = - u \cdot \partial_{x} \rho_{\infty} - \frac{1}{\sqrt{g}} \partial_{\mu} \big( \sqrt{g} B^{\mu} \big) \rho_{\infty} 
+= - u \cdot \partial_{x} \rho_{\infty} - \frac{1}{\sqrt{g}} \partial_{\mu} \big( \sqrt{g} B^{\mu} \big) \rho_{\infty} 
 $$
-
-
 
 The first term is $u \cdot \partial_{x} \rho_{\infty} = (d -1) u \cdot {f} \rho_{\infty}$ simply by the definition of $f$, so it remains to show that the second term is the same.
 
-<!-- We take advantage of the coordinates to have a different set of $\theta$ coordinates for each
+At this point, it is helpful to picture the full space as a fiber bundle, where at each point in the $n$ dimensional target space (i.e. the space parameterized by $x$), there is a corresponding $n-1$ dimensional manifold, namely the $n-1$ sphere, parameterized by $\theta$.
 
-SHOW:
+With this picture in mind, we see that it is natural to vary the parameterization of the $n-1$ sphere as we move over the target space, and indeed $\frac{1}{\sqrt{g}} \partial_{\mu} ( \sqrt{g} B^{\mu} ) \rho_{\infty}$ is invariant under such reparametrization.
+
+Without loss of generality, we can choose coordinates $\theta$ oriented relative to the coordinates at a point $x$ such that $u\cdot f = u_1|f|$
 
 $$
-B_\mu = \partial_\mu(u\cdot f(x)) = \partial_\mu (u \cdot \delta_{1i}|f|) = |f|\partial_\mu(u_1) = -|f|\sin(\theta^1)\delta_{1\mu}
+B_\mu = \partial_\mu (u\cdot f) = (\partial_\mu u_1)|f| = (\frac{\partial}{\partial \theta_\mu} \cos(\theta_1))|f| =  -\sin(\theta_1)\delta_{1\mu}|f|
 $$
 
-todo
+It then follows that
 
-This concludes the proof. -->
+$$
+\frac{1}{\sqrt{g}} \partial_{\mu} \big( \sqrt{g} B^{\mu} \big) \rho_{\infty} 
+= $$ 
 
+$$\frac{1}{\Pi_{k=1}^{d-2}(\sin \vartheta^k)^{d-1-k}} \frac{\partial}{\partial \theta_\mu}((\Pi_{k=1}^{d-2}(\sin \vartheta^k)^{d-1-k})(-\sin(\theta_1)\delta_{1\mu}|f|))
+$$
 
-🚧 Under construction 🚧
+$$
+= \frac{1}{\Pi_{k=1}^{d-2}(\sin \vartheta^k)^{d-1-k}} \frac{\partial}{\partial \theta_1}((\Pi_{k=1}^{d-2}(\sin \vartheta^k)^{d-1-k})(-\sin(\theta_1)|f|))
+$$
 
+$$
+= \frac{\Pi_{k\neq 1}(\sin \vartheta^k)^{d-1-k}}{(\sin \vartheta^1)^{d-1-1}\Pi_{k\neq 1}(\sin \vartheta^k)^{d-1-k}} \frac{\partial}{\partial \theta_1}(((\sin \vartheta^1)^{d-1-1})(-\sin(\theta_1)|f|))
+$$
+
+$$
+= -\frac{1}{(\sin \vartheta^1)^{d-2}} \frac{\partial}{\partial \theta_1}(((\sin \vartheta^1)^{d-1})|f|)
+$$
+
+(and then using that $\frac{d}{dx}(\sin x)^n = n\cos(x)\sin(x)^{n-1}$)
+
+$$
+= -(d-1)(\cos \vartheta^1)|f|
+$$
+
+$$
+= -(d-1) u_1 |f| = -(d-1)(u\cdot f)
+$$
+
+QED.

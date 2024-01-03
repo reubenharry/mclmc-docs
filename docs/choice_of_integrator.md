@@ -37,10 +37,6 @@ where $\delta = \epsilon \vert \nabla E(x) \vert / (d-1)$ and ${e} = - \nabla E(
 
 [^2]: Note that in the original paper, you'll see $d$, not $d-1$. The latter removes the need for the consideration of auxilliary weights; derivation is 🚧 under construction 🚧.
 
-<!-- Robnik et al. conjecture that this doesn't matter. They observe that the Lagrangian of the Hamiltonian in question is the same as the Hamiltonian itself (
-        via todo Legendre
-        up to a constant
-). -->
 <!-- As a result, the action of the Lagrangian is the expected energy. But since the defining feature of the true trajectory is that it minimizes the action, small variations like the numerical trajectory should be very close in action, and thus have almost the same expected energy. Empirically, this line of argument is made plausible by the fact that non-symplectic integrators (e.g. RK4) work fine. -->
 
 ## Integrator stability
