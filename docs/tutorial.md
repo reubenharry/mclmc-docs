@@ -126,42 +126,43 @@ With some thought, one can convert the MCHMC ODE with the logarithmic kinetic en
 $$
 \frac{d}{ds}\begin{bmatrix}
 x \\
-u
+v
 \end{bmatrix}
 =
 \begin{bmatrix}
-u \\
--P(u)\nabla S(x)/(d-1) \\
+v \\
+-P(v)\nabla S(x)/(d-1) \\
 \end{bmatrix}
 $$
 
 Here is how we get this.
 
-We begin by choosing $T(u) = \frac{d}{2}\log(|u|^2/d)$. Hamilton's equations give:
+We begin by choosing $T(v) = \frac{d}{2}\log(|v|^2/d)$. Hamilton's equations give:
 
 $$
 \frac{d}{dt}\begin{bmatrix}
 x \\
-u
+v
 \end{bmatrix}
 =
 \begin{bmatrix}
-\frac{u}{|u|}\frac{1}{w} \\
+\frac{v}{|v|}\frac{1}{w} \\
 -\nabla V(x)
 \end{bmatrix}
 $$
 
-where $w(t) = |u(t)|/d$.
+where $w(t) = |v(t)|/d$.
 
-Numerical integration of the SDE requires a small step size because the position changes quickly at high $u$.
+Numerical integration of the SDE requires a small step size because when $|v|$ is small, i.e. when the trajectory does a u-turn, $\frac{d}{dt}x$ becomes large.
 
-To ameliorate the problem, one can rescale time to a natural parameter, such that each step moves by the same length on the manifold.
+To ameliorate the problem, one can consider a new flow $x \circ s$, where $s : \R \to \R$ is defined so that $\frac{d}{dt}s(t) = w(t)$.
 
-Concretely, let $ds = dt/w(t)$.
+Then[^1] with $u(t) = v(t)/|v(t)|$:
 
+[^1]: Note that the original paper defines $s$ and $t$ switched.
 
 $$
-\frac{d}{ds}\begin{bmatrix}
+\frac{d}{dt}\begin{bmatrix}
 x \\
 u \\
 w
@@ -174,7 +175,7 @@ u \\
 \end{bmatrix}
 $$
 
-with $\rho_\infty(x) * w_\infty(x) \propto e^{-V(x)}$.
+with $\rho_\infty(x)w_\infty(x) \propto e^{-V(x)}$.
 
 We then note:
 
