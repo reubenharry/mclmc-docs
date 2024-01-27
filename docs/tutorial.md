@@ -155,7 +155,7 @@ where $w(t) = |v(t)|/d$.
 
 Numerical integration of the SDE requires a small step size because when $|v|$ is small, i.e. when the trajectory does a u-turn, $\frac{d}{dt}x$ becomes large.
 
-To ameliorate the problem, one can consider a new flow $x \circ s$, where $s : \mathbb{R} \to \mathbb{R}$ is defined so that $\frac{d}{dt}s(t) = w(t)$.
+To ameliorate the problem, one can consider a new flow $x \mapsto x \circ s$, where $s : \mathbb{R} \to \mathbb{R}$ is defined so that $\frac{d}{dt}s(t) = w(t)$.
 
 Then[^1] with $u(t) = v(t)/|v(t)|$:
 
@@ -180,7 +180,7 @@ with $\rho_\infty(x)w_\infty(x) \propto e^{-V(x)}$.
 We then note:
 
 $$
-H(x,u) =  \frac{d}{2}\log(|u|^2/d) + V(x) \\
+H(x,v) =  \frac{d}{2}\log(|v|^2/d) + V(x) \\
 \Rightarrow w(x) = e^{(E-V(x))/d}
 $$
 
