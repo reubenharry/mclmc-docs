@@ -17,6 +17,12 @@
 
 [Microcanonical Langevin Monte Carlo](https://arxiv.org/pdf/2303.18221.pdf)
 
+### Isokinetic Molecular Dynamics
+
+[Algorithms and novel applications based on the isokinetic ensemble. I. Biophysical and path integral molecular dynamics](https://pubs.aip.org/aip/jcp/article-abstract/118/6/2510/438540/Algorithms-and-novel-applications-based-on-the)
+
+[Molecular Dynamics With Deterministic and Stochastic Numerical Methods](https://link.springer.com/book/10.1007/978-3-319-16375-8)
+
 
 ## Sequential Monte Carlo Samplers
 

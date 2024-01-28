@@ -126,6 +126,7 @@ nav:
   - Theory: 
     - Basics: tutorial.md
     - Choice of Integrator: choice_of_integrator.md
+    - Deriving the ODE: deriving.md
     - Implementation: implementation.md
     - Tuning: tuning.md
     - ODE on a manifold: diffgeo.md
