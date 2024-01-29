@@ -126,15 +126,15 @@ nav:
   - Theory: 
     - Basics: tutorial.md
     - Choice of Integrator: choice_of_integrator.md
-    - Deriving the ODE: deriving.md
     - Implementation: implementation.md
     - Tuning: tuning.md
     - ODE on a manifold: diffgeo.md
     - SDE on a manifold: sde.md
     # - Ensemble algorithm: ensemble.md
-    - Sequential Monte Carlo: mclmcsmc.md
+    # - Sequential Monte Carlo: mclmcsmc.md
     # - Geometry: geometricintuition.md
     - Low-Dimensional Case: low_d.md
+    - Alternative formulations: deriving.md
   - Applications: applications.md
   - Supplementary material:
     - Index: supplementary.md

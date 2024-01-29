@@ -1,6 +1,6 @@
 # Sequential Monte Carlo (SMC) samplers
 
-See the [references](/references/#sequential-monte-carlo-samplers) for surprisingly readable introductions to SMC.
+See the [](/references/#sequential-monte-carlo-samplers) for surprisingly readable introductions to SMC.
 
 !!! Note 
 
