@@ -1,8 +1,8 @@
 # Applications
 
-## Standard Benchmarks
+## Bayesian Statistics
 
-See code [here](https://github.com/JakobRobnik/MicroCanonicalHMC/tree/master/benchmarks), in particular [this file](https://github.com/JakobRobnik/MicroCanonicalHMC/blob/master/benchmarks/benchmarks_mchmc.py) for a list of standard benchmark applications, compared to HMC.
+MCLMC is intended as a successor to NUTS, which is the version of Hamiltonian Monte Carlo used most widely in the social sciences for Bayesian analyses.
 
 ## Lattice Field Theories
 
@@ -10,7 +10,8 @@ See the later section of [this paper](https://arxiv.org/abs/2303.18221) for a co
 
 ## Astrophysics
 
-🚧 Under construction 🚧
+[Field-Level Inference with Microcanonical Langevin Monte Carlo
+](https://arxiv.org/abs/2307.09504)
 
 ## Molecular Dynamics
 

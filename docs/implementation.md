@@ -1,4 +1,4 @@
-There is a Python implementation of the code [here](https://github.com/JakobRobnik/MicroCanonicalHMC). 
+There is a Python implementation of the code in Blackjax [here](https://github.com/blackjax-devs/blackjax/blob/main/blackjax/mcmc/mclmc.py). 
 
 For example, this is the momentum update, calculated in an efficient way:
 
@@ -48,5 +48,3 @@ def leapfrog(d, T, V):
   
   return step, 1 # number of gradient calls per step
 ```
-
-This is the core of the code (except that the minimal norm integrator is the default). Most of the rest of the code is setting up initial conditions, tuning, and more elaborate variations of the algorithm (multiple chains, interacting chains, annealing, SMC).
