@@ -135,9 +135,9 @@ v \\
 \end{bmatrix}
 $$
 
-Here is how we get this.
+for $P(a) = (I - aa^T)$.
 
-We begin by choosing $T(v) = \frac{d}{2}\log(|v|^2/d)$. Hamilton's equations give:
+Here is how we get this. We begin by choosing $T(v) = \frac{d}{2}\log(|v|^2/d)$. Hamilton's equations give:
 
 $$
 \frac{d}{dt}\begin{bmatrix}
@@ -155,27 +155,35 @@ where $w(t) = |v(t)|/d$.
 
 Numerical integration of the SDE requires a small step size because when $|v|$ is small, i.e. when the trajectory does a u-turn, $\frac{d}{dt}x$ becomes large.
 
-To ameliorate the problem, one can consider a new flow $x \mapsto x \circ s$, where $s : \mathbb{R} \to \mathbb{R}$ is defined so that $\frac{d}{dt}s(t) = w(t)$.
+To ameliorate the problem, one can consider a new flow $\begin{bmatrix} x' \\ v'\end{bmatrix} = \begin{bmatrix} x \\ v\end{bmatrix} \circ s$, where $s : \mathbb{R} \to \mathbb{R}$ is defined so that $\frac{d}{dt}s(t) = w(t)$, i.e. $s(t) = \int^t w(s(t')) dt'$
 
-Then[^1] with $u(t) = v(t)/|v(t)|$:
+Then[^1] with $u(t) = v'(t)/|v'(t)|$:
 
 [^1]: Note that the original paper defines $s$ and $t$ switched.
 
 $$
 \frac{d}{dt}\begin{bmatrix}
-x \\
+x' \\
 u \\
-w
+w'
 \end{bmatrix}
 =
 \begin{bmatrix}
 u \\
--P(u)(\nabla V(x)/d) \\
--w u \cdot \nabla V(x) /d
+-P(u)(\nabla V(x')/d) \\
+-w' u \cdot \nabla V(x') /d
 \end{bmatrix}
 $$
 
-with $\rho_\infty(x)w_\infty(x) \propto e^{-V(x)}$.
+??? Derivation 
+
+    $\frac{d}{dt}x'(t) = \frac{d}{dt}x(s(t)) = \frac{d}{ds}x(s(t))\frac{ds}{dt} = v(s(t))/|v(s(t))| \frac{1}{w}w = u$
+
+
+    $\frac{d}{dt}u = \frac{d}{dt}(v'(t)/|v'(t)|) = (\frac{d}{dt}v(s(t)))/|v(s(t))| + v(s(t))\frac{d}{dt}(|v(s(t))|^{-1})$ $= -\nabla V(x')/d - v(s(t)) (-|v(s(t)|^{-2}))\frac{v(s(t))}{|v(s(t))|}\frac{|v(s(t))|}{d} = -P(u)(\nabla V(x')/d)$
+
+
+so that $\rho_\infty(x)w_\infty(x) \propto e^{-V(x)}$.
 
 We then note:
 
@@ -200,17 +208,17 @@ so that rederiving the equations from $S'$, we obtain:
 
 $$
 \frac{d}{ds}\begin{bmatrix}
-x \\
+x' \\
 u
 \end{bmatrix}
 =
 \begin{bmatrix}
 u \\
--P(u)\nabla S(x)/(d-1) \\
+-P(u)\nabla S(x')/(d-1) \\
 \end{bmatrix}
 $$
 
-Since now $\rho_\infty(x) = e^{-S(x)}$, we no longer need to keep track of the weights.
+Since now $\rho_\infty(x) = e^{-S(x')}$, we no longer need to keep track of the weights.
 
 Moreover, we can study this ODE in its own right, and this is the approach taken in the [Microcanonical Langevin Monte Carlo](https://arxiv.org/pdf/2303.18221.pdf) paper.
 

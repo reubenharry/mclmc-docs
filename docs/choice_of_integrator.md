@@ -41,7 +41,7 @@ where $\delta = \epsilon \vert \nabla E(x) \vert / (d-1)$ and ${e} = - \nabla E(
 
 ## Integrator stability
 
-Symplecting integrators are argued to be long-term stable, becuase they are the exact Hamiltonian flows of the so-called shadow Hamiltonian, which is for a small stepsize usually similar to the original Hamiltonian. They exactly preserve the shadow Hamiltonian, which forces stability. 
+Symplectic integrators are argued to be long-term stable, becuase they are the exact Hamiltonian flows of the so-called shadow Hamiltonian, which is for a small stepsize usually similar to the original Hamiltonian. They exactly preserve the shadow Hamiltonian, which forces stability. 
 
 The ESH integrator in the rescaled time is not symplectic, but we will here show that the MCHMC Hamiltonian poseses an extrodinary propery, which also suggests stability. 
 
