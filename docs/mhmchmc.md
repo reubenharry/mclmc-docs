@@ -311,7 +311,7 @@ We then use the dual averaging optimization scheme to find an $\epsilon$ which p
 We then estimate $L$ by the variance of the distribution, as in the unadjusted case. However, we must now rerun the dual averaging scheme, this time for $L$ fixed and $N_p$ variable.
 
 
-## Work energy theorems
+## Thereoms about $W = \Delta E$
 
 I'm having a go at understanding under what circumstances $W = \Delta E$, and where exactly it applies.
     
@@ -324,10 +324,10 @@ $$
 If we perform a conformal transformation on the vector field to obtain $F'(z) = a(z)F(z)$, we want to show that:
 
 $$
--\log \frac{p'(z'(T))}{p'(z'(0))} - \int_{0}^T \nabla \cdot F'(z'(s)) ds = E(z'(T)) - E(z'(0))
+-\log \frac{p'(z'(T))}{p'(z'(0))} - \int_{0}^{s(T)} \nabla \cdot F'(z'(s)) ds = E(z'(T)) - E(z'(0))
 $$
 
-where $\dot z' = F'(z')$, and $p'$ is (some, but not any?) stationary distribution with respect to $F'$.
+where $\dot z' = F'(z')$, and $p'$ is (some, but not any?) stationary distribution with respect to $F'$. $s(t) = \int_0^t a(z'(s)) ds$.
 
 This would include, more or less, the case of isokinetic dynamics.
 
@@ -377,7 +377,11 @@ This demonstrates that our $w$ is $\log a$.
 
 We then see that the first term, $-\log \frac{p'(z'(T))}{p'(z'(0))}$, is equal to $-\log \frac{\sqrt{g(z'(T))}}{\sqrt{g(z'(0))}} = \log \frac{a(T)}{a(0)}$.
 
-If our original system has a potential energy $\log a$, then we see that the first term is the change in potential energy. Indeed, for the ESH dynamics, our potential energy is $\log |v|$, and the rescaling uses $a \propto |v|$, so we obtain the desired result.
+If our original system has a potential energy $\log a$, then we see that the first term is the change in potential energy. Indeed, for the ESH dynamics, our potential energy is $\log |v|$, and the rescaling uses $a \propto |v|$, so we obtain the desired result, namely
+
+$$
+-\log \frac{p'(z'(T))}{p'(z'(0))} = V(z'(T)) - V(z'(0))
+$$
 
 We now consider the second term, $\int_{0}^T \nabla \cdot F'(z'(s)) ds$. We find:
 
@@ -391,9 +395,25 @@ $$
 $$
 
 $$
-= \int F\nabla a
+= \int F\cdot\nabla a
 $$
 
 If $\nabla a = v$, then we have the desired result that the second term equals the change in kinetic energy, by the work-energy theorem.
 
-Indeed, for $a=|v|$, we have $\nabla |v| = \frac{v}{|v|}$, and now we do some change of measure to obtain the desired result.
+Indeed, for $a=|v|$, we have $\nabla |v| = \frac{v}{|v|}$, and now we do a change of measure to obtain the desired result.
+
+$$
+\int_0^{s(T)} \frac{1}{|v(s(t))|} F(x(s(t)))\cdot v(s(t))dt = \int_0^{T} F(x(s))\cdot v(s) ds = \Delta K
+$$
+
+### Discretization
+
+We'd also like to show that if $F = (I\otimes F_2) \circ (F_1 \otimes I)$, where $F_1$ and $F_2$ are the vector fields on two subspaces, then:
+
+$$
+W(F) = W(F_1 \otimes 1) + W(I \otimes F_2)
+$$
+
+I think work should generally be "functorial", i.e. $W(a\circ b) = W(a) + W(b)$, but it is subtle. In particular, is the stationary distribution of $F$ also stationary under $F_1$ and $F_2$ (or the leapfrog dynamics?).
+
+In the case of Hamiltonian dynamics, then $F_1$ and $F_2$ are both traceless, but certainly each individual update does not preserve the stationary distribution. The composition of updates may, I don't know. Presumably it preserves the canonical distribution with respect to the shadow Hamiltonian.
