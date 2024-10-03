@@ -130,7 +130,7 @@ nav:
     - Tuning: tuning.md
     - ODE on a manifold: diffgeo.md
     - SDE on a manifold: sde.md
-    - Adjusted MCLMC: mhmchmc.md
+    # - Adjusted MCLMC: mhmchmc.md
     # - Ensemble algorithm: ensemble.md
     # - Sequential Monte Carlo: mclmcsmc.md
     # - Geometry: geometricintuition.md
