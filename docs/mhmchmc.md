@@ -414,6 +414,6 @@ $$
 W(F) = W(F_1 \otimes 1) + W(I \otimes F_2)
 $$
 
-I think work should generally be "functorial", i.e. $W(a\circ b) = W(a) + W(b)$, but it is subtle. In particular, is the stationary distribution of $F$ also stationary under $F_1$ and $F_2$ (or the leapfrog dynamics?).
+I think work should generally be "functorial", i.e. $W(a\circ b) = W(a) + W(b)$, but it is subtle. In particular, should we be considering the stationary distribution of $F$, or the canonical distribution in terms of the shadow Hamiltonian. (Presumably $p$ remains the stationary distribution of $F$)
 
-In the case of Hamiltonian dynamics, then $F_1$ and $F_2$ are both traceless, but certainly each individual update does not preserve the stationary distribution. The composition of updates may, I don't know. Presumably it preserves the canonical distribution with respect to the shadow Hamiltonian.
+In the case of Hamiltonian dynamics, then $F_1$ and $F_2$ are both traceless, but certainly each individual update does not preserve the stationary distribution. The composition of updates may, I don't know. 
