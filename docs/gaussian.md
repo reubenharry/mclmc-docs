@@ -11,38 +11,40 @@ where as usual $\mathcal{L}(x) \propto -\log p(x)$, and $x, \Pi \in \mathbb{R}^n
 $$
 L(x,\dot x) = \mathrm{sup}_{{\xi}} \{\dot{x} \cdot {\xi} - H(x, {\xi}) \} = \frac{d}{2} \log \vert \dot{x} \vert^2 - \mathcal{L}(x) + d
 $$
-
+<!-- 
 ??? Derivation
 
-    $$
-    \frac{d}{d{\xi_i}} (\dot{x} \cdot {\xi} - H(x, {\xi}) ) := \frac{d}{d{\xi_i}} (\dot{x} \cdot {\xi} - \frac{d}{2}\log\frac{|{\xi}|^2}{d} - \mathcal{L}(x))
-    $$
+$$
+\frac{d}{d{\xi_i}} (\dot{x} \cdot {\xi} - H(x, {\xi}) ) := \frac{d}{d{\xi_i}} (\dot{x} \cdot {\xi} - \frac{d}{2}\log\frac{|{\xi}|^2}{d} - \mathcal{L}(x))
+$$
 
-    $$
-    = \frac{d}{d{\xi_i}} (\dot{x} \cdot {\xi} - \frac{d}{2}\log|{\xi}^2|) = \dot x - d \frac{\xi_i}{|\xi|^2}
-    $$
+$$
+= \frac{d}{d{\xi_i}} (\dot{x} \cdot {\xi} - \frac{d}{2}\log|{\xi}^2|) = \dot x - d \frac{\xi_i}{|\xi|^2}
+$$
 
-    $$
-    \Rightarrow \xi = \frac{\dot x|\xi|^2}{d}
-    $$
+$$
+\Rightarrow \xi = \frac{\dot x|\xi|^2}{d}
+$$
 
-    Then note that $|\dot x| = d\frac{|\xi|}{|\xi|^2} = \frac{d}{|\xi|} \Rightarrow |\xi| = \frac{d}{|\dot x|}$, so that $\xi = \frac{\dot x|\frac{d}{|\dot x|}|^2}{d} = d\frac{\dot x}{|\dot x|^2}$.
+Then note that $|\dot x| = d\frac{|\xi|}{|\xi|^2} = \frac{d}{|\xi|} \Rightarrow |\xi| = \frac{d}{|\dot x|}$, so that $\xi = \frac{\dot x|\frac{d}{|\dot x|}|^2}{d} = d\frac{\dot x}{|\dot x|^2}$.
 
-    Using this value of $\xi$, we find:
+Using this value of $\xi$, we find:
 
-    $$
-    \mathrm{sup}_{{\xi}} \{\dot{x} \cdot {\xi} - H(x, {\xi}) \} = \dot{x} \cdot d\frac{\dot x}{|\dot x|^2} - \frac{d}{2}\log\frac{|d\frac{\dot x}{|\dot x|^2}|^2}{d} - \mathcal{L}(x)$$
+$$
+\mathrm{sup}_{{\xi}} \{\dot{x} \cdot {\xi} - H(x, {\xi}) \} = \dot{x} \cdot d\frac{\dot x}{|\dot x|^2} - \frac{d}{2}\log\frac{|d\frac{\dot x}{|\dot x|^2}|^2}{d} - \mathcal{L}(x)$$
 
-    $$
-    = d - \frac{d}{2}\log \frac{d}{|\dot x|^2} - \mathcal{L}(x) = d + \frac{d}{2}\log\frac{|\dot x|^2}{d} - \mathcal{L}(x)
-    $$
+$$
+= d - \frac{d}{2}\log \frac{d}{|\dot x|^2} - \mathcal{L}(x) = d + \frac{d}{2}\log\frac{|\dot x|^2}{d} - \mathcal{L}(x)
+$$ -->
 
-TODO resolve ^
+<!-- TODO resolve ^ -->
 
-Since a standard Gaussian has $p(x) \propto e^{-\frac{1}{2}|x|^2}$, $\mathcal{L}(x) = \frac{|x|^2}{2}$. TODO: we ignore the constant right?
+Since a standard Gaussian has $p(x) \propto e^{-\frac{1}{2}|x|^2}$, $\mathcal{L}(x) = \frac{|x|^2}{2}$. 
 
-"so
-the dynamics is confined to the x1-x2 plane. " - general argument?
+<!-- TODO: we ignore the constant right? -->
+
+<!-- "so
+the dynamics is confined to the x1-x2 plane. " - general argument? -->
 
 We see (standard argument from classical mechanics?) that the motion is confined to a plane, and without loss of generality, we let $x_1, x_2$ span that plane.
 

@@ -1,4 +1,4 @@
-Notes:
+<!-- Notes:
 
 " In the first phase the Markov chain converges towards the typical set from its initial
 position in parameter space while the Markov chain Monte Carlo estimators suffer from
@@ -12,8 +12,11 @@ at a slower rate (Figure 7c)." - https://arxiv.org/pdf/1701.02434
 
 
 
+
 " The importance of detailed balance is its
-role in assuring self-adjointness of the operator that propagates probabilities." - https://arxiv.org/pdf/1402.7107
+role in assuring self-adjointness of the operator that propagates probabilities." - https://arxiv.org/pdf/1402.7107 -->
+
+
 
 !!! Prereqs
 
@@ -21,48 +24,54 @@ role in assuring self-adjointness of the operator that propagates probabilities.
 
 ## Metropolis Hastings
 
-For an introduction to the Metropolis-Hastings (MH) algorithm, see https://ermongroup.github.io/cs228-notes/inference/sampling/. In brief, we construct a step in our MCMC chain by sampling from some $q(z'|z)$ and accepting this sampling with probability $\mathrm{min} \big( 1,  e^{-W(z', z)}\big)$, where
+For an introduction to the Metropolis-Hastings (MH) algorithm, see https://ermongroup.github.io/cs228-notes/inference/sampling/. In brief, we construct a step in our MCMC chain by sampling from some $q(z'|z)$ and accepting this sample with probability 
 
-$$
-\begin{equation}
-    W(z', z) = \frac{q(z \vert z') p(z')}{q(z' \vert z) p(z)}
-\end{equation}
+$$\mathrm{min} \big( 1,  \frac{q(z | z') p(z')}{q(z' | z) p(z)}\big)
 $$
 
-    todo: 
-    and reversible, i.e. $q(z'|z) = \delta(\phi(z,T)-z')$ for $\phi(\phi(z, T),) = z$, 
-For present purposes, we are concerned with $q$ deterministic, and expressed as an ODE:
 
+<!-- $$
+W(z', z) = \frac{q(z | z') p(z')}{q(z' | z) p(z)}
+$$ -->
+
+
+For present purposes, we are concerned with $q$ deterministic and reversible, i.e. $q(z'|z) = \delta(\phi(z, T)-z)$, where $\phi$ is defined by an ODE:
 
 $$
 \frac{d}{dt}\phi(z,t) = F(\phi(z,t))
 $$
 
-with $\phi(z,0)=z, \phi(z,T)=z'$. The key insight is that we can express $W$ as:
+with $\phi(z,0)=z$. The key insight is that we can then derive the following equation 
+
 
 $$
-\begin{equation} 
-    W(z(T), z(0)) = -\log \frac{p(z(T))}{p(z(0))} - \int_{0}^T \nabla \cdot F(z(s)) ds
-\end{equation}
+-\log\frac{q(z | z') p(z')}{q(z' | z) p(z)} = -\log \frac{p(z(T))}{p(z(0))} - \int_{0}^T \nabla \cdot F(z(s)) ds := W(\gamma_{z,T})
 $$
+
+where $W$ is to be viewed as a quantity that depends on the path of the trajectory $\gamma = z([0,T])$. (More technically, let $\bar{dW}$ be a non-exact 1-form, with $W(\gamma_{z,T}) := \int_{\gamma_{z,T}} \bar{dW}$). The name $W$ is suggestive: there is a relationship between $W$ and the physical quantity work.
 
 ??? Derivation
 
-First recall that $\delta(x-a)f(x) = \delta(x-a)f(a)$, and $\delta(f(x)) = \sum_i \delta(x-a_i)|\frac{df}{dx}a_i|^{-1}$, where $a_i$ are the roots of $f$. 
+    First recall that $\delta(x-a)f(x) = \delta(x-a)f(a)$, and $\delta(f(x)) = \sum_i \delta(x-a_i)|\frac{df}{dx}a_i|^{-1}$, where $a_i$ are the roots of $f$. 
 
-In our case, $f(z) = \phi(z)-z'$, so that $\delta(\phi(z)-z) = \delta(z-\phi(z'))|\frac{\partial \phi}{\partial z}(\phi(z'))|^{-1} = \delta(z-\phi(z'))|\frac{\partial \phi}{\partial z}(z)|^{-1}$.
+    In our case, $f(z) = \phi(z)-z'$, so that $\delta(\phi(z)-z) = \delta(z-\phi(z'))|\frac{\partial \phi}{\partial z}(\phi(z'))|^{-1} = \delta(z-\phi(z'))|\frac{\partial \phi}{\partial z}(z)|^{-1}$.
 
-Then
+    Then
 
-$$
-\begin{equation}
-    \frac{q(z \vert z')}{q(z' \vert z)} = \frac{\delta(\varphi(z') - z)}{\delta(\varphi(z) - z')} = \frac{\delta(\varphi(z') - z)}{\delta(z - \varphi(z'))} \, | \frac{\partial \varphi}{\partial z}(z) | = | \frac{\partial \varphi}{\partial z}(z) |
-\end{equation}
-$$
+    $$
+        \frac{q(z | z')}{q(z' | z)} = \frac{\delta(\varphi(z') - z)}{\delta(\varphi(z) - z')} = \frac{\delta(\varphi(z') - z)}{\delta(z - \varphi(z'))} \, | \frac{\partial \varphi}{\partial z}(z) | = | \frac{\partial \varphi}{\partial z}(z) |
+    $$
 
-[Jacobi's formula](https://en.wikipedia.org/wiki/Jacobi%27s_formula) for an operator $M$ is:
+    [Jacobi's formula](https://en.wikipedia.org/wiki/Jacobi%27s_formula) for an operator $M$ yields:
 
-$$
+
+    $$
+    \det D_z\phi(z,T) = \det D_z\phi(z,0)\exp(\int_0^T tr(DF(\phi(z,s))) ds)
+    $$
+
+    Noting that the trace of the Jacobian is the divergence $\nabla \cdot F$, we obtain the desired result.
+
+<!-- $$
 \frac{d}{dt}\det M = \det(M)tr(M^{-1}\frac{dM}{dt})
 $$
 
@@ -75,32 +84,316 @@ $$
 $$
 = \det(D_z\phi(z,T))tr(D_z\phi(z,T)^{-1}DF)
 $$
-TODO fix above 
 
-by the basis independence of the trace. Exponentiating, we obtain:
-
-$$
-\det D_z\phi(z,T) = \det D_z\phi(z,0)\exp(\int_0^T tr(DF(\phi(z,s))) ds)
-$$
-
-Noting that the trace of the Jacobian is the divergence $\nabla \cdot F$, we see that the exponent of the second term of $W$ is $\delta(z-\phi(z'))|\frac{\partial \phi}{\partial z}(z)|^{-1} = \frac{q(z \vert z')}{q(z' \vert z)}$, as desired.
-
-
+by the basis independence of the trace. Exponentiating, we obtain: -->
 
 The usefulness of this formula is that it lets us derive both the MH update for HMC, but also other dynamics, such as MCLMC.
 
 ## MH for HMC
 
+In this setting, our variable of interest is $z = (x, p)$, where $x$ is the variable of our target distribution, and $\Pi$ is an auxiliary momentum. We define $\varphi$ as:
 
+$$
+    \varphi = \mathcal{T}\circ \Phi_{t/n}^{\circ n} := \mathcal{T}\circ \underbrace{\Phi_{t/n} \circ \Phi_{t/n} \circ \cdots \Phi_{t/n}}_n \\
+$$
+
+where
+
+$$    
+\mathcal{T}(x, p) = (x, \, -p),
+$$
+
+$$    
+\Phi_{\epsilon} = B_{\epsilon/2} \circ A_{\epsilon} \circ B_{\epsilon/2},
+$$
+
+$$    
+A_{\epsilon}(x, p) = (x + \epsilon p, \, p)
+    \qquad 
+    B_{\epsilon}(x, p) = (x, \, p + \epsilon \nabla \log p(x)) 
+$$
+
+$\Phi_\epsilon$ is a discretization of Hamilton's equations of motion, while $\mathcal{T}$ ensures reversibility
+
+In addition, after each $\Phi$ proposal, we update momentum $p$ by resampling according to the marginal distribution. 
+
+The maps $A$ and $B$ are generated by dynamical systems with  $\dot z = [p, \, 0]$ and $\dot z = [0, \nabla \log p(x)]$ respectively, so that both have vanishing divergence: $\nabla \cdot \dot z = [\frac{\partial}{\partial x}p , \frac{\partial}{\partial p}0] = 0$ and $\nabla \cdot \dot z = [\frac{\partial}{\partial x}0 , \frac{\partial}{\partial p}\nabla \log p(x)] = 0$. 
+
+So only the first term in our equation for work survives, giving $W(t) = H(z(t)) - H(z(0))$, which is the *total energy change* incurred by the proposal. 
 
 ## MH for MCLMC
 
-For Hamiltonian Monte Carlo, the sympectic nature of the integrator means that TODO
+For Microcanonical Hamiltonian Monte Carlo, we can follow a similar route to obtain $W$. Remarkably, we find that it is still equal to the change in total energy.
 
-We can also incorporate MH into the MCHMC setting. Here, we need to calculate
+The analysis of $W$ for MCHMC proceeds similarly, with our full state space now $\mathcal{M} = \mathbb{R}^d \times S^{d-1}$ and the stationary distribution $p(z) \propto p(x) U_{S^{d-1}}(u)$, where $z = (x, u)$ and $U_{S^{d-1}}$ is the uniform distribution on the sphere (with respect to the standard metric).  Note that the stationary distribution $p(z)$ is chosen in a way that the marginal $\int p(x, u) d u = p(x)$ is the target distribution that we want to sample from.
 
-The key is that we need to be able to calculate the acceptance ratio
 
-TODO
+The dynamics
 
-As it turns out, we can do so
+$$
+    A_{\epsilon}(x, u) = (x + \epsilon u, \, u).
+    \qquad 
+    B_{\epsilon}(x, u) = (x, \, F_{\epsilon}(\boldsymbol{e}(x), u)) 
+$$
+
+where 
+
+$$
+    F_{\epsilon}(\boldsymbol{e}, u) = \frac{u + (\sinh{\delta}+ \boldsymbol{e} \cdot u (\cosh \delta -1)) \boldsymbol{e} }{\cosh{\delta} + \boldsymbol{e} \cdot u \sinh{\delta}} ,
+$$
+
+$$
+\delta = \epsilon \vert \nabla V(x) \vert / (d-1) 
+$$
+
+$$
+\boldsymbol{e} = - \nabla V(x) / \vert \nabla V(x) \vert
+$$
+
+
+We now calculate $W$ using the equation for work. The $A$ update is generated by $\dot z = [u, 0]$ which is divergence-free. Thus $W(T) = V(x(T)) - V(x(0))$, the change in potential energy (the kinetic energy cancels).
+
+As for the $B$ update, we find that:
+
+$$
+    W(T) = - \int_0^T \nabla \cdot F(z(s)) d s = (d-1) \log \{ \cosh{\delta} + \boldsymbol{e} \cdot u \sinh{\delta} \}
+$$
+
+??? Derivation
+
+    We first note that $W$ is a function of $\frac{p(z')}{p(z)}|\frac{d z'}{dz}|$ which is coordinate invariant (since $p(z')dz' = p(z)dz$). So we'll pull back to a coordinate $\theta$ with
+
+    $$
+        u = \cos \theta \boldsymbol{e} + \sin \theta \boldsymbol{f},
+    $$
+
+    for some unit vector $\boldsymbol{f}$, orthogonal to $\boldsymbol{e}$. $\theta$ is then a coordinate on the $S^{d-1}$ manifold. Then, the momentum updating map is
+    $$
+        u' = \frac{1}{\cosh \delta + \cos \theta \sinh \delta} u + \frac{\sinh \delta + \cos \theta (\cosh \delta -1)}{\cosh \delta + \cos \theta \sinh \delta} \boldsymbol{e}
+    $$
+
+    $$
+    = \frac{\sinh \delta + \cos \theta \cosh \delta}{\cosh \delta + \cos \theta \sinh \delta} \boldsymbol{e} + \frac{\sin \theta}{\cosh \delta + \cos \theta \sinh \delta} \boldsymbol{f}
+    $$
+
+    so that 
+
+    $$
+        \cos \theta' = \frac{\sinh \delta + \cos \theta \cosh \delta}{\cosh \delta + \cos \theta \sinh \delta} \qquad \sin \theta' = \frac{\sin \theta}{\cosh \delta + \cos \theta \sinh \delta}.
+    $$
+
+
+    The Jacobian of the $\theta \mapsto \theta'$ transformation, which is the second term of the work, is
+    $$
+        \bigg|\frac{d \theta'}{d \theta} \bigg|= \bigg|\frac{d \theta'}{d \cos \theta'} \frac{d \cos \theta'}{d \theta}\bigg|=  \frac{1}{\bigg|\cosh \delta + \cos \theta \sinh \delta \bigg|}
+    $$
+
+    The first term is
+
+    $$
+        \frac{p(\theta')}{p(\theta)} = \sqrt{\frac{g(\theta')}{g(\theta)}} = \bigg(\frac{\sin \theta'}{\sin \theta}\bigg)^{d-2} = \frac{1}{(\cosh \delta + \cos \theta \sinh \delta)^{d-2}}
+    $$
+
+    So $\log \frac{p(\theta')}{p(\theta)}|\frac{d \theta'}{d\theta}|$ is obtained as desired.
+
+Notably, this is nothing but the MCHMC kinetic energy, as derived [here](tutorial.md/#time-rescaling). Work therefore equals the MCHMC energy change.
+
+<!-- 
+
+which is the work-energy theorem. But in addition, 
+
+we have, relevant to HMC: -->
+
+!!! Summary 
+
+    One could summarize the situation as follows. If $D$ is the discretization operator, $S$ the rescaling operator, $E$ the total energy, $W(\phi, \gamma)$ the work along a path $\gamma$, $\phi$ our system, and $\gamma_{\phi, T} = \phi^*[0,T]$, we have for any Hamiltonian system:
+
+    $$
+    W(\phi, \gamma_{\phi, T}) = E(\phi(T)) - E(\phi(0)) = 0
+    $$
+
+    and specifically of relevance for HMC:
+
+    $$
+    W(D(\phi), \gamma_{D(\phi), T}) = E(D(\phi)(T)) - E(D(\phi)(0))
+    $$
+
+    Meanwhile for MCHMC, we have
+
+    $$
+    W(D(S(\phi)), \gamma_{D(S(\phi)), T}) = E(D(S(\phi))(T)) - E(D(S(\phi))(0))
+    $$
+
+    
+
+The relevance of this calculation from a computational perspective is that we can keep track of the total energy change in the $A$ and $B$ updates as we numerical integrate, and use it to compute the MH acceptance probability.
+
+## Tuning MH
+
+As with unadjusted MCLMC, we have two paramters, a stepsize $\epsilon$ and a decoherence length $L$. In the adjusted setting, the decoherence length is $N\epsilon$, where $N_p$ is the number of steps in a proposal, so that $N_p = L/\epsilon$.
+
+Tuning follows a similar approach to the unadjusted setting. Again, we first tune stepsize $\epsilon$ to target a particular energy error, and then $L$.
+
+We estimate the optimal acceptance rate to target to be $0.65$ for a first order integrator and $0.8$ for a second order integrator.
+
+??? Derivation
+
+Let's denote by $K_{\mathrm{accepted}}$ the number of accepted proposals that we need for a new effective sample. This corresponds to travelling a distance on the order of the size of the typical set
+
+$$
+    K_{\mathrm{accepted}} N \epsilon \propto \sqrt{d}
+$$
+
+since $\sqrt{d}$ is that size of the standard Gaussian typical set. The number of effective samples per gradient call is then
+
+
+$$
+    \mathit{ESS} = \frac{1}{K_{\mathrm{total}} N} = \frac{P(\mathrm{accept})}{K_{\mathrm{accepted}} N} \propto \frac{\epsilon P(\mathrm{accept})}{\sqrt{d}}
+$$
+
+We now relate $P(\mathrm{accept})$ to step size $\epsilon$.
+
+We do this in several steps. First we note that from MCLMC, there is a known relationship between expected energy variance and $\epsilon$, namely:
+
+$$
+    \sigma^2 / d \propto \epsilon^4 / d^2,
+$$
+
+Second, we observe that we can relate energy variance to energy bias. This relies on the fact that energy bias is precisely the work, as discussed above. To do so, first note that
+
+$$
+\int p(z) \frac{q(z \vert z') p(z')}{q(z' \vert z) p(z)} d z = \int p(z') {\vert} \frac{\partial \varphi}{\partial z}(z) {\vert} d z = \int p(\varphi(z)) d \varphi(z) = 1
+$$
+
+On the other hand, for $W(z) := -\log\frac{q(z \vert z') p(z')}{q(z' \vert z) p(z)}$:
+
+$$
+\int p(z) \frac{q(z \vert z') p(z')}{q(z' \vert z) p(z)} d z = E_{z \sim p}[e^{-W(z)}] = E_{W \sim W^*p}[e^{-W}] 
+$$
+
+$$
+\approx \int_{- \infty}^{\infty} \frac{1}{\sqrt{2 \pi \sigma^2}} e^{-(W- \mu)^2 / 2\sigma^2} e^{-W} d W = e^{\frac{\sigma^2}{2} - \mu}
+$$
+
+where we have approximated the pushforward distribution $W^*p$ as a Gaussian with mean $\mu$ and variance $\sigma^2$ and then applied a Gaussian integral.
+
+
+
+So $e^{\frac{\sigma^2}{2} - \mu} = 1$, implying that $\mu = \frac{\sigma^2}{2}$.
+
+We now relate $\mu$ to $P(\mathrm{accept})$.
+
+In equilibrium, $P(W > 0 \vert \mathrm{accepted}) = P(W < 0 \vert \mathrm{accepted}) = \frac{1}{2}$ by the design of the MH criterion. Since $P(\mathrm{accepted} | W < 0) = 1$,  we have that $\frac{1}{2} = P(w < 0 | \mathrm{accepted}) = \frac{P(W < 0 | \mathrm{accepted})P(W < 0)}{P(a)} = \frac{P(W < 0)}{P(a)}$, so $P(\mathrm{accepted}) = 2 P(W < 0)$. Therefore:
+
+$$
+P(\mathrm{accept}) = 2 \Phi(-\mu / \sigma) =  2 \Phi(-\mu / \sqrt{2 \mu}),
+$$
+
+where $\Phi$ is the Gaussian cumulative density function.
+
+So we have related $\epsilon$ to $\sigma$, $\sigma$ to $\mu$, and $\mu$ to $P(\mathrm{accept})$ and $P(\mathrm{accept})$ to ESS. Putting this all together:
+
+$$
+    ESS \propto \mu^{1/4} \, \Phi(-\sqrt{\mu/2}) \, d^{-1/4} ,
+$$
+
+so we see that the efficiency drops as $d^{-1/4}$.
+
+ESS is maximal at $\mu = 0.41$, corresponding to $P(\mathrm{accept}) = 65 \%$. We then see that the optimal stepsize grows only as $\epsilon \propto d^{1/4}$ instead of $d^{1/2}$ if the efficiency was unimpaired.
+
+Note that this result is different if a higher order integrator is used. For example, using a fourth order integrator $\sigma^2 / d \propto (\epsilon^2/d)^4$ and the optimal setting is $\mu = 0.13$ and $P(\mathrm{accept}) = 80 \%$.
+
+
+
+
+We then use the dual averaging optimization scheme to find an $\epsilon$ which produces an energy error which yields this acceptance probability. However, the adjusted setting has a nontrivial relationship between $L$ and $\epsilon$, so we change $\epsilon$ with fixed $N$ (i.e. updating $L$ with each change of $\epsilon$.)
+
+We then estimate $L$ by the variance of the distribution, as in the unadjusted case. However, we must now rerun the dual averaging scheme, this time for $L$ fixed and $N_p$ variable.
+
+
+## Work energy theorems
+
+I'm having a go at understanding under what circumstances $W = \Delta E$, and where exactly it applies.
+    
+Suppose we have a system generated by a vector field $F$ (i.e. $\dot z = F(z)$)  where we have
+
+$$
+-\log \frac{p(z(T))}{p(z(0))} - \int_{0}^T \nabla \cdot F(z(s)) ds = E(z(T)) - E(z(0))
+$$
+
+If we perform a conformal transformation on the vector field to obtain $F'(z) = a(z)F(z)$, we want to show that:
+
+$$
+-\log \frac{p'(z'(T))}{p'(z'(0))} - \int_{0}^T \nabla \cdot F'(z'(s)) ds = E(z'(T)) - E(z'(0))
+$$
+
+where $\dot z' = F'(z')$, and $p'$ is (some, but not any?) stationary distribution with respect to $F'$.
+
+This would include, more or less, the case of isokinetic dynamics.
+
+
+
+### Proof sketch
+
+We start with the simpler assumption (without too much loss of generality) that the original system is Hamiltonian, so incompressible, i.e. $\nabla \cdot F = 0$, and with a potential energy $V$ yet to be determined. 
+
+We then compute the first term $-\log \frac{p'(z'(T))}{p'(z'(0))}$
+
+First recall that for a compressible flow $\dot z = G(z)$, we have the standard result that
+
+$$
+|\frac{\partial z(t,z_0)}{\partial z_0}| = e^{\int_0^t \kappa ds}
+$$
+
+where $\kappa = \nabla \cdot G$. Suppose there exists a definite integral, i.e. a $w$ with $\frac{d}{dt}w = \kappa$, and define a metric on phase space by $\sqrt{g(z)} = e^{-w(z)}$.
+
+It can then be shown that a generalized Louville equation[^1] exists:
+
+[^1]: https://web.archive.org/web/20100612191643id_/http://homepages.nyu.edu/~mt33/abstracts/JChemPhys_115_1678.pdf
+
+$$
+\partial_t (\rho \sqrt{g}) + \nabla \cdot (\rho \sqrt{g} F) = 0
+$$
+
+and the $\Pi_i(\delta(\Lambda_i(z)- c))\sqrt{g(z)}dz$ is an invariant volume form, defining a Microcanonical distribution under this metric.
+
+Let us calculate $\sqrt{g}$. We observe that $\frac{dw}{dt} = \nabla w \cdot \dot z = \nabla w \cdot F$, so the property that $w$ must satisfy is, in the case of $F'$ is:
+
+$$
+F' \cdot \nabla w = \nabla \cdot F'
+$$
+
+or 
+
+$$
+aF \cdot \nabla w = \nabla \cdot (aF) 
+$$
+
+$$
+= a\nabla\cdot F + F \cdot \nabla a = F \cdot \nabla a  = aF \cdot \frac{\nabla a}{a} = aF \cdot \nabla (\log a)
+$$
+
+This demonstrates that our $w$ is $\log a$.
+
+We then see that the first term, $-\log \frac{p'(z'(T))}{p'(z'(0))}$, is equal to $-\log \frac{\sqrt{g(z'(T))}}{\sqrt{g(z'(0))}} = \log \frac{a(T)}{a(0)}$.
+
+If our original system has a potential energy $\log a$, then we see that the first term is the change in potential energy. Indeed, for the ESH dynamics, our potential energy is $\log |v|$, and the rescaling uses $a \propto |v|$, so we obtain the desired result.
+
+We now consider the second term, $\int_{0}^T \nabla \cdot F'(z'(s)) ds$. We find:
+
+$$
+\int_{0}^T \nabla \cdot F'(z'(s)) ds = \int_{0}^T \nabla \cdot (a(z)F(z'(s))) ds
+$$
+
+
+$$
+\int \nabla \cdot F' = \int \nabla \cdot (aF)
+$$
+
+$$
+= \int F\nabla a
+$$
+
+If $\nabla a = v$, then we have the desired result that the second term equals the change in kinetic energy, by the work-energy theorem.
+
+Indeed, for $a=|v|$, we have $\nabla |v| = \frac{v}{|v|}$, and now we do some change of measure to obtain the desired result.

@@ -130,7 +130,7 @@ nav:
     - Tuning: tuning.md
     - ODE on a manifold: diffgeo.md
     - SDE on a manifold: sde.md
-    # - Metropolis Hastings + MCLMC: mhmchmc.md
+    - Adjusted MCLMC: mhmchmc.md
     # - Ensemble algorithm: ensemble.md
     # - Sequential Monte Carlo: mclmcsmc.md
     # - Geometry: geometricintuition.md
@@ -139,6 +139,7 @@ nav:
   - Applications: applications.md
   - Supplementary material:
     - Index: supplementary.md
+    - Statistical Mechanics: classical.md
     - Integrators: integrators.md
     - Differential Geometry: geometry.md
     - Sequential Monte Carlo: smc.md

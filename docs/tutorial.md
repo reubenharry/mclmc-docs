@@ -28,15 +28,15 @@ $$
 
 Here is a perspective on Markov Chain Monte Carlo algorithms in general which will be useful with regard to the present algorithm. 
 
-The goal is to sample from a distribution $p(x) \propto e^{-E(x)}$, where $E$ is known. To this end, we do the following:
+The goal is to sample from a distribution $p(x) \propto e^{-V(x)}$, where $V$ is known. To this end, we do the following:
 
 1. Specify some discrete, preferably Markovian, stochastic process that has as a fixed point under its flow a distribution $q$, such that $p$ has some simple relationship to $q$.
 
 2. Run the process forward to generate samples from $q$, under the assumption of ergodicity, and transform into samples from $p$.
 
-When $E$ is (computably) differentiable, we can use Hamiltonian Monte Carlo (HMC), which follows the above steps with some detail added:
+When $V$ is (computably) differentiable, we can use Hamiltonian Monte Carlo (HMC), which follows the above steps with some detail added:
 
-1. Choose a Hamiltonian $H$, such that for $q(x,z) \propto e^{-bH(x,z)}$ (known in statistical mechanics as the *canonical distribution*), we have $p(x) = \int dz q(x,z)$. Any classical $H$ of the form $H= T(z) + E(x)$ (for $z$ momentum and $x$ position) will do. 
+1. Choose a Hamiltonian $H$, such that for $q(x,z) \propto e^{-bH(x,z)}$ (known in statistical mechanics as the *canonical distribution*), we have $p(x) = \int dz q(x,z)$. Any classical $H$ of the form $H= T(z) + V(x)$ (for $z$ momentum and $x$ position) will do. 
 2. The Hamiltonian ODE implies a volume preserving deterministic process (flow), call it $f$, which when discretized by a symplectic (volume preserving) integrator $S$, gives a discrete process $S(f)$.
 3. Add occasional resampling of momentum for reasons of ergodicity, to yield the desired discrete stochastic process.
 4. Obtain samples from $q$, which are (x,z) pairs, and throw away the $z$ part, to get samples from $p$.
@@ -74,16 +74,16 @@ where $p'(x)/Z := p(x)$ is the unnormalized probability distribution.
 The short proof comes from the beginning of section 2.1 [here](https://arxiv.org/pdf/2111.02434.pdf).
 
 $$
-p(\vx) \propto \int_{\mathbb{R}^d} \delta(H(\vx, v) - E) dv = 
+p(\vx) \propto \int_{\mathbb{R}^d} \delta(H(\vx, v) - c) dv = 
 $$
 
 
 
 $$
 \begin{align*}
-    &= (1/Z) \int { d\vv} ~{ \delta\left(E(\vx) + d/2 \log v^2/d - c\right)} \\
-    &= (1/Z) \int { J( \phi)~d \phi~ \rho^{d-1}~d\rho} ~ { \delta\left(E(\vx) + d \log \rho - c -d/2 \log d \right)} \\
-    &= (1/Z) \int { J( \phi)~d \phi~ \rho^{d-1}~d\rho} ~{ \rho/d ~ \delta(\rho - e^{-E(\vx)/d + c/d + \half \log d})} = {e^{-E(\vx)} / Z} ~~~~
+    &= (1/Z) \int { d\vv} ~{ \delta\left(V(\vx) + d/2 \log v^2/d - c\right)} \\
+    &= (1/Z) \int { J( \phi)~d \phi~ \rho^{d-1}~d\rho} ~ { \delta\left(V(\vx) + d \log \rho - c -d/2 \log d \right)} \\
+    &= (1/Z) \int { J( \phi)~d \phi~ \rho^{d-1}~d\rho} ~{ \rho/d ~ \delta(\rho - e^{-V(\vx)/d + c/d + \half \log d})} = {e^{-V(\vx)} / Z} ~~~~
 \end{align*}
 $$
 
@@ -96,7 +96,7 @@ $$
 $$
 
 $$
-\dot v = -\partial_xE(x)
+\dot v = -\partial_xV(x)
 $$
 
 [Robnik, De Luca, Silverstein and Seljak](https://arxiv.org/pdf/2212.08549.pdf) generalize this to a whole family of kinetic energies, but focus most of the attention on this one, or rather, a slight variation:
@@ -165,15 +165,15 @@ $$
 \frac{d}{dt}\begin{bmatrix}
 x' \\
 u \\
-w'
 \end{bmatrix}
 =
 \begin{bmatrix}
 u \\
 -P(u)(\nabla V(x')/d) \\
--w' u \cdot \nabla V(x') /d
 \end{bmatrix}
 $$
+
+We also have, for $r = \log |v'|$, that $\dot r = \frac{1}{|v|}\frac{v}{|v|}\frac{|v|}{d}(-\nabla V(x)) = -u \nabla V(x)/d$.
 
 ??? Derivation 
 
@@ -183,9 +183,7 @@ $$
     $\frac{d}{dt}u = \frac{d}{dt}(v'(t)/|v'(t)|) = (\frac{d}{dt}v(s(t)))/|v(s(t))| + v(s(t))\frac{d}{dt}(|v(s(t))|^{-1})$ $= -\nabla V(x')/d - v(s(t)) (-|v(s(t)|^{-2}))\frac{v(s(t))}{|v(s(t))|}\frac{|v(s(t))|}{d} = -P(u)(\nabla V(x')/d)$
 
 
-so that $\rho_\infty(x)w_\infty(x) \propto e^{-V(x)}$.
-
-We then note:
+We find that $\rho_\infty(x')w_\infty(x') \propto e^{-V(x)}$. We then note:
 
 $$
 H(x,v) =  \frac{d}{2}\log(|v|^2/d) + V(x) \\
@@ -198,13 +196,13 @@ $$
 \rho_\infty(x) \propto e^{(V(x))/d}e^{-V(x)} = e^{(1/d -1)V(x)} = e^{-((d-1)/d)V(x)}
 $$
 
-We then simply rescale $S$ by $d/(d-1)$ to obtain:
+We then simply rescale $V$ by $d/(d-1)$ to obtain:
 
 $$
-S'(x) = \frac{d}{d-1} V(x)
+V'(x) = \frac{d}{d-1} V(x)
 $$
 
-so that rederiving the equations from $S'$, we obtain:
+so that rederiving the equations from $V'$, we obtain:
 
 $$
 \frac{d}{ds}\begin{bmatrix}
@@ -214,11 +212,11 @@ u
 =
 \begin{bmatrix}
 u \\
--P(u)\nabla S(x')/(d-1) \\
+-P(u)\nabla V(x')/(d-1) \\
 \end{bmatrix}
 $$
 
-Since now $\rho_\infty(x) = e^{-S(x')}$, we no longer need to keep track of the weights.
+Since now $\rho_\infty(x') = e^{-V(x')}$, we no longer need to keep track of the weights.
 
 Moreover, we can study this ODE in its own right, and this is the approach taken in the [Microcanonical Langevin Monte Carlo](https://arxiv.org/pdf/2303.18221.pdf) paper.
 
@@ -248,16 +246,16 @@ Focusing on the latter, we do an update
 
 $$
 z \sim \mathcal{N}(0,1) \\
-\Phi^O_{\epsilon, L}(x,u) = (x, n(u+z\sqrt{d^{-1}(e^{2\frac{\epsilon}{L}}-1)}))
+\Phi^O_{\epsilon, L}(x,u) = (x, \mathit{norm}(u+z\sqrt{d^{-1}(e^{2\frac{\epsilon}{L}}-1)}))
 $$
 
-where $n(u) = \frac{u}{|u|}$, and $L$ is a parameter of our choosing with dimension of time (see the [section on tuning](/theorydocs/docs/tuning.md)). The reason for this curious looking expression is that it can be shown that 
+where $\mathit{norm}(u) = \frac{u}{|u|}$, and $L$ is a parameter of our choosing with dimension of time (see the [section on tuning](/theorydocs/docs/tuning.md)). The reason for this curious looking expression is that it can be shown that 
 
 $$
 \langle step_\epsilon^n(u) \cdot u \rangle = e^{-\frac{\epsilon n}{L}}
 $$
 
-which means that the correlation between $u$ and the momentum at a time $n\cdot\epsilon$ later decays at a rate controlled by $L$. As $L$ increases, the time to decorrelate increases, so think of $L$ as the *decoherence time* of the momentum.
+which means that the correlation between $u$ and the momentum at a time $n\cdot\epsilon$ later decays at a rate controlled by $L$. As $L$ increases, the time to decorrelate increases, so think of $\frac{L}{\epsilon}$ as the decoherence time, and $L$ as the *decoherence length* of the momentum.
 
 These stochastic jumps are applied to the discrete random walk obtained from the ODE. However, it is natural to ask if one can formulate a *stochastic differential equation* (SDE) for which the discretization results in this same random walk. The benefit is that one can then analyze the properties of the SDE using more abstract tools. That is the topic of [Microcanonical Langevin Monte Carlo](https://arxiv.org/pdf/2303.18221.pdf). 
 
