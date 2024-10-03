@@ -377,11 +377,13 @@ This demonstrates that our $w$ is $\log a$.
 
 We then see that the first term, $-\log \frac{p'(z'(T))}{p'(z'(0))}$, is equal to $-\log \frac{\sqrt{g(z'(T))}}{\sqrt{g(z'(0))}} = \log \frac{a(T)}{a(0)}$.
 
-If our original system has a potential energy $\log a$, then we see that the first term is the change in potential energy. Indeed, for the ESH dynamics, our potential energy is $\log |v|$, and the rescaling uses $a \propto |v|$, so we obtain the desired result, namely
+If our original system has a kinetic energy $\log a$, then we see that the first term is the change in kinetic energy. Indeed, for the ESH dynamics, our kinetic energy is $\log |v|$, and the rescaling uses $a \propto |v|$, so we obtain
 
 $$
--\log \frac{p'(z'(T))}{p'(z'(0))} = V(z'(T)) - V(z'(0))
+-\log \frac{p'(z'(T))}{p'(z'(0))} = K(z'(T)) - K(z'(0))
 $$
+
+The further transformation to the $u$ variable exchanges potential and kinetic energy (see below), so that the first term is the change in potential energy.
 
 We now consider the second term, $\int_{0}^T \nabla \cdot F'(z'(s)) ds$. We find:
 
@@ -417,3 +419,28 @@ $$
 I think work should generally be "functorial", i.e. $W(a\circ b) = W(a) + W(b)$, but it is subtle. In particular, should we be considering the stationary distribution of $F$, or the canonical distribution in terms of the shadow Hamiltonian. (Presumably $p$ remains the stationary distribution of $F$)
 
 In the case of Hamiltonian dynamics, then $F_1$ and $F_2$ are both traceless, but certainly each individual update does not preserve the stationary distribution. The composition of updates may, I don't know. 
+
+## Geometric picture
+
+Let $M$ be the configuration manifold, i.e. the manifold on which $x$ is valued. We are concerned with two transformations, $S$, and $v \mapsto \frac{v}{|v|}$, which commute:
+
+$$
+\begin{CD}
+T(T^*M) @>{S(F) = |v|F}>> T(T^*M)\\
+@VVV @VV{B(v)=\frac{v}{|v|}}V \\
+T(S(M)) @>{}>> T(S(M));
+\end{CD}$$
+
+
+Here, we start with a vector field $F$, which is section of $T(T^*M)$, the tangent bundle of the cotangent bundle on $M$. The Sundman transform $S$ is a gauge transform on the outer tangent bundle, which maps $F$ to $|v|F$.
+
+The second transform is a bundle morphism on the inner bundle, which maps $v$ to $\frac{v}{|v|}$.
+
+The (microcanonical) stationary distribution for a given $F$ is determined by two things: (1) the constants of motion $\frac{d}{dt}\Lambda(z(t))=0$, and (2) by the compressibility integral $w=\int \nabla \cdot F$, which determines the metric $\sqrt{g}=e^{-w}$. In general, we have $\rho(z) \propto \sqrt{g(z)}\delta(\Lambda(z) - c)$.
+
+For $F$ a Hamiltonian vector field, we have $\nabla \cdot F = 0$, so that the metric is flat, $H$ is preserved and the stationary distribution is the microcanonical distribution: $\rho(z) \propto \delta(H(z) - c)$.
+
+For $S(F)$, $w = \log |v|$ (one choice of potential energy) so that the metric is $\frac{1}{|v|}$, and $H$ is still conserved (since the transformation amounts to a variable time delay), so we have $\rho(z) = \frac{1}{|v|}\delta(H(z) - c)$.
+
+Finally for $B^*S(F)$, we have $w(z) \propto V(x)$, and now $|u|$, or equivalently kinetic energy is conserved, so that $\rho(z) = e^{-V(x)}\delta(|u| - c)$.
+
