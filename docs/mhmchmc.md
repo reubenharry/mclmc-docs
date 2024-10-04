@@ -335,29 +335,50 @@ This would include, more or less, the case of isokinetic dynamics.
 
 ### Proof sketch
 
-We start with the simpler assumption (without too much loss of generality) that the original system is Hamiltonian, so incompressible, i.e. $\nabla \cdot F = 0$, and with a potential energy $V$ yet to be determined. 
+#### Lemma 1:
 
-We then compute the first term $-\log \frac{p'(z'(T))}{p'(z'(0))}$
+Let $F$ be a vector field, or in more general terms, a section of a vector bundle, and define $z$ by $\dot z = F(z)$. Then we have a (microcanonical) stationary distribution of the form $\rho(z) \propto \sqrt{g}(z)\delta(\Lambda(z) - c)$, where $\Lambda$ is a conserved quantity, and $g$ is a metric on phase space given by $g(z)=e^{-w(z)}$, where $w$ is defined by $\frac{d}{dt}w = \nabla \cdot F$.
 
-First recall that for a compressible flow $\dot z = G(z)$, we have the standard result that
+??? Proof
+
+    First recall that for a compressible flow $\dot z = G(z)$, we have the standard result that
+
+    $$
+    |\frac{\partial z(t,z_0)}{\partial z_0}| = e^{\int_0^t \kappa ds}
+    $$
+
+    where $\kappa = \nabla \cdot G$. Suppose there exists a definite integral, i.e. a $w$ with $\frac{d}{dt}w = \kappa$, and define a metric on phase space by $\sqrt{g(z)} = e^{-w(z)}$.
+
+    It can then be shown that a generalized Louville equation[^1] exists:
+
+    [^1]: https://web.archive.org/web/20100612191643id_/http://homepages.nyu.edu/~mt33/abstracts/JChemPhys_115_1678.pdf
+
+    $$
+    \partial_t (\rho \sqrt{g}) + \nabla \cdot (\rho \sqrt{g} F) = 0
+    $$
+
+    so that $\Pi_i(\delta(\Lambda_i(z)- c))\sqrt{g(z)}dz$ is an invariant volume form, as desired.
+
+
+
+Let $M$ be the configuration manifold, i.e. the manifold on which $x$ is valued. We are concerned with two transformations, $S$, and $v \mapsto \frac{v}{|v|}$, which commute:
 
 $$
-|\frac{\partial z(t,z_0)}{\partial z_0}| = e^{\int_0^t \kappa ds}
-$$
+\begin{CD}
+T(T^*M) @>{S(F) = |v|F}>> T(T^*M)\\
+@VVV @VV{B(v)=\frac{v}{|v|}}V \\
+T(S(M)) @>{}>> T(S(M))
+\end{CD}$$
 
-where $\kappa = \nabla \cdot G$. Suppose there exists a definite integral, i.e. a $w$ with $\frac{d}{dt}w = \kappa$, and define a metric on phase space by $\sqrt{g(z)} = e^{-w(z)}$.
+Here, the Sundman transform $S$ is a gauge transform on the outer tangent bundle, which maps $F(z)$ to $|v|F(z)$.
 
-It can then be shown that a generalized Louville equation[^1] exists:
+The second transform $B$ is a bundle morphism on the inner bundle, which maps $v$ to $\frac{v}{|v|}$, and can be lifted to the full bundle as $B^*$, in the usual way.
 
-[^1]: https://web.archive.org/web/20100612191643id_/http://homepages.nyu.edu/~mt33/abstracts/JChemPhys_115_1678.pdf
+Define $T_1(F) = -\log \frac{p(z(T))}{p(z(0))}$, where $p$ is understood to be stationary under $F$. Define $T_2(F) = \int_{0}^T \nabla \cdot F(z(s)) ds$. Then $W(F) = T_1(F) + T_2(F)$, which we now calculate for various vector fields.
 
-$$
-\partial_t (\rho \sqrt{g}) + \nabla \cdot (\rho \sqrt{g} F) = 0
-$$
+First, for $F$ a Hamiltonian vector field, we have $\nabla \cdot F = 0$, so that the metric is flat, and $H$ is preserved, so the stationary distribution is the (flat) microcanonical distribution: $\rho(z) \propto \delta(H(z) - c)$. Then $T_1(F) = 0 = T_2(F) = E(z(T))-E(z(0))$, as desired.
 
-and the $\Pi_i(\delta(\Lambda_i(z)- c))\sqrt{g(z)}dz$ is an invariant volume form, defining a Microcanonical distribution under this metric.
-
-Let us calculate $\sqrt{g}$. We observe that $\frac{dw}{dt} = \nabla w \cdot \dot z = \nabla w \cdot F$, so the property that $w$ must satisfy is, in the case of $F'$ is:
+Now consider $S(F)(z) = a(z)F(z)$. Let us calculate $\sqrt{g}$. We observe that $\frac{dw}{dt} = \nabla w \cdot \dot z = \nabla w \cdot F$, so the property that $w$ must satisfy is, in the case of $F'$ is:
 
 $$
 F' \cdot \nabla w = \nabla \cdot F'
@@ -375,15 +396,9 @@ $$
 
 This demonstrates that our $w$ is $\log a$.
 
-We then see that the first term, $-\log \frac{p'(z'(T))}{p'(z'(0))}$, is equal to $-\log \frac{\sqrt{g(z'(T))}}{\sqrt{g(z'(0))}} = \log \frac{a(T)}{a(0)}$.
+We then see that the first term, $-\log \frac{p'(z'(T))}{p'(z'(0))}$, is equal to $-\log \frac{\sqrt{g(z'(T))}}{\sqrt{g(z'(0))}} = \log a(0) - \log a(s(T))$.
 
-If our original system has a kinetic energy $\log a$, then we see that the first term is the change in kinetic energy. Indeed, for the ESH dynamics, our kinetic energy is $\log |v|$, and the rescaling uses $a \propto |v|$, so we obtain
-
-$$
--\log \frac{p'(z'(T))}{p'(z'(0))} = K(z'(T)) - K(z'(0))
-$$
-
-The further transformation to the $u$ variable exchanges potential and kinetic energy (see below), so that the first term is the change in potential energy.
+If our original system has a kinetic energy $\log a$, then we see that the first term is the negative change in kinetic energy (in rescaled time).
 
 We now consider the second term, $\int_{0}^T \nabla \cdot F'(z'(s)) ds$. We find:
 
@@ -400,13 +415,48 @@ $$
 = \int F\cdot\nabla a
 $$
 
-If $\nabla a = v$, then we have the desired result that the second term equals the change in kinetic energy, by the work-energy theorem.
+If $\nabla a = v$, then we have the result that the second term equals the change in kinetic energy, by the work-energy theorem.
 
-Indeed, for $a=|v|$, we have $\nabla |v| = \frac{v}{|v|}$, and now we do a change of measure to obtain the desired result.
+Indeed, for $a=|v|$, we have $\nabla |v| = \frac{v}{|v|}$, and now we do a change of measure to obtain:
 
 $$
-\int_0^{s(T)} \frac{1}{|v(s(t))|} F(x(s(t)))\cdot v(s(t))dt = \int_0^{T} F(x(s))\cdot v(s) ds = \Delta K
+\int_0^{T} \frac{1}{|v(s(t))|} F(x(s(t)))\cdot v(s(t))dt = \int_0^{s(T)} F(x(s))\cdot v(s) ds = \Delta K
 $$
+
+Now we finally note that $H$ is conserved by $S(F)$, because it merely rescales time, and since $T_1 = -T_2$, we have $W = 0 = \Delta E$.
+
+Finally, we consider $B^*S(F)$. Recall that now, $\dot u \propto -(I-uu^T)\nabla V(x) = -\nabla V(x) + (u\cdot \nabla V(x))u$, so for $F(u) =  -\nabla V(x) + (u\cdot \nabla V(x))u$, we calculate that $\nabla\cdot F \propto u\cdot \nabla V(x)$, so that $w \propto V(x)$, since $\frac{d}{dt}V(x) = \nabla V(x) \cdot \dot x = \nabla V(x) \cdot u$. 
+
+So $T_1 = \log V(x(s(T))) - \log V(x(s(0))) = \Delta V$, the change in potential energy.
+
+On the other hand, $T_2$ is invariant under $B^*$, since we haven't changed $F$, only the underlying manifold (is this true?). So now $W = T_1 + T_2 = \Delta K + \Delta V = \Delta E$, as desired.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- For $S(F)$, $w = \log |v|$ (one choice of potential energy) so that the metric is $\frac{1}{|v|}$, and $H$ is still conserved (since the transformation amounts to a variable time delay), so we have $\rho(z) = \frac{1}{|v|}\delta(H(z) - c)$. -->
+
+<!-- Finally for $B^*S(F)$, we have $w(z) \propto V(x)$, and now $|u|$, or equivalently kinetic energy is conserved, so that $\rho(z) = e^{-V(x)}\delta(|u| - c)$. -->
+
+
+
+
+
+
+
+
+
 
 ### Discretization
 
@@ -416,31 +466,9 @@ $$
 W(F) = W(F_1 \otimes 1) + W(I \otimes F_2)
 $$
 
-I think work should generally be "functorial", i.e. $W(a\circ b) = W(a) + W(b)$, but it is subtle. In particular, should we be considering the stationary distribution of $F$, or the canonical distribution in terms of the shadow Hamiltonian. (Presumably $p$ remains the stationary distribution of $F$)
-
-In the case of Hamiltonian dynamics, then $F_1$ and $F_2$ are both traceless, but certainly each individual update does not preserve the stationary distribution. The composition of updates may, I don't know. 
-
-## Geometric picture
-
-Let $M$ be the configuration manifold, i.e. the manifold on which $x$ is valued. We are concerned with two transformations, $S$, and $v \mapsto \frac{v}{|v|}$, which commute:
-
-$$
-\begin{CD}
-T(T^*M) @>{S(F) = |v|F}>> T(T^*M)\\
-@VVV @VV{B(v)=\frac{v}{|v|}}V \\
-T(S(M)) @>{}>> T(S(M));
-\end{CD}$$
+I think work should generally be "functorial", i.e. $W(a\circ b) = W(a) + W(b)$, but it is subtle. In particular, we should be considering the stationary distribution of $F$, not the stationary distribution of the vector field of the shadow Hamiltonian.
 
 
-Here, we start with a vector field $F$, which is section of $T(T^*M)$, the tangent bundle of the cotangent bundle on $M$. The Sundman transform $S$ is a gauge transform on the outer tangent bundle, which maps $F$ to $|v|F$.
 
-The second transform is a bundle morphism on the inner bundle, which maps $v$ to $\frac{v}{|v|}$.
 
-The (microcanonical) stationary distribution for a given $F$ is determined by two things: (1) the constants of motion $\frac{d}{dt}\Lambda(z(t))=0$, and (2) by the compressibility integral $w=\int \nabla \cdot F$, which determines the metric $\sqrt{g}=e^{-w}$. In general, we have $\rho(z) \propto \sqrt{g(z)}\delta(\Lambda(z) - c)$.
-
-For $F$ a Hamiltonian vector field, we have $\nabla \cdot F = 0$, so that the metric is flat, $H$ is preserved and the stationary distribution is the microcanonical distribution: $\rho(z) \propto \delta(H(z) - c)$.
-
-For $S(F)$, $w = \log |v|$ (one choice of potential energy) so that the metric is $\frac{1}{|v|}$, and $H$ is still conserved (since the transformation amounts to a variable time delay), so we have $\rho(z) = \frac{1}{|v|}\delta(H(z) - c)$.
-
-Finally for $B^*S(F)$, we have $w(z) \propto V(x)$, and now $|u|$, or equivalently kinetic energy is conserved, so that $\rho(z) = e^{-V(x)}\delta(|u| - c)$.
 
