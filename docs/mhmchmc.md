@@ -35,7 +35,7 @@ W(z', z) = \frac{q(z | z') p(z')}{q(z' | z) p(z)}
 $$ -->
 
 
-For present purposes, we are concerned with $q$ deterministic and reversible, i.e. $q(z'|z) = \delta(\phi(z, T)-z)$, where $\phi$ is defined by an ODE:
+For present purposes, we are concerned with $q$ deterministic and reversible, i.e. $q(z'|z) = \delta(\phi(z, T)-z')$, where $\phi$ is defined by an ODE:
 
 $$
 \frac{d}{dt}\phi(z,t) = F(\phi(z,t))
@@ -403,7 +403,7 @@ $$
 
 This demonstrates that our $w$ is $\log a$.
 
-We then see that the first term, $-\log \frac{p'(z'(T))}{p'(z'(0))}$, is equal to $-\log \frac{\sqrt{g(z'(T))}}{\sqrt{g(z'(0))}} = \log a(s(T)) - \log a(0)$ (where $s(t) = \int_0^t a(z'(s)) ds$).
+We then see that the first term, $-\log \frac{p'(z'(T))}{p'(z'(0))}$, is equal to $-\log \frac{\sqrt{g(z'(T))}}{\sqrt{g(z'(0))}} = \log a(s(T)) - \log a(0)$ (where $s(t) = \int_0^t a(z'(s)) ds$). Note that we include the metric in the stationary distribution, since it is this full object which is stationary.
 
 If our original system has a kinetic energy $\log a$, then we see that the first term is the change in kinetic energy (in rescaled time).
 
@@ -422,7 +422,7 @@ $$
 = \int F\cdot\nabla a
 $$
 
-If $\nabla a = v$ (i.e. $\nabla_v a = v$ and $\nabla_x a = 0$), then we have the result that the second term equals the change in kinetic energy, by the work-energy theorem, so $T_2 = -\Delta K$.
+If $\nabla a = v$ (i.e. $\nabla_v a = v$ and $\nabla_x a = 0$), then we have the result that the second term equals the (negative) change in the *standard* kinetic energy, by the work-energy theorem. 
 
 Indeed, for $a=|v|$, we have $\nabla |v| = \frac{v}{|v|}$, and now we do a change of measure to obtain:
 
@@ -430,17 +430,22 @@ $$
 \int_0^{T} \frac{1}{|v(s(t))|} F(x(s(t)))\cdot v(s(t))dt = \int_0^{s(T)} F(x(s))\cdot v(s) ds = \Delta K
 $$
 
-Now we finally note that $H$ is conserved by $S(F)$, because it merely rescales time, and since $T_1 = -T_2$, we have $W = 0 = \Delta E$. (Note that this argument does not apply to volume conservation, since particles in different parts of the volume move one different clocks).
+But we also see that $\int \nabla \cdot F = w(z(T)) - w(z(0))$, simply by the defining property of $w$, so that the second term always cancels the first.
+
+
+Now we finally note that $H$ is conserved by the time rescaling, and since $T_1 = -T_2$, we have $W = 0 = \Delta E$. (Note that this argument does not apply to volume conservation, since points in different parts of the volume move on different clocks).
 
 Finally, we consider $B^*S(F)$. Recall that now, $\dot u \propto -(I-uu^T)\nabla V(x) = -\nabla V(x) + (u\cdot \nabla V(x))u$, so for $B^*S(F)(u) =  -\nabla V(x) + (u\cdot \nabla V(x))u$, we calculate that $\nabla\cdot B^*S(F) \propto u\cdot \nabla V(x)$, so that $w \propto V(x)$, since $\frac{d}{dt}V(x) = \nabla V(x) \cdot \dot x = \nabla V(x) \cdot u$. 
 
-So $T_1 = \log V(x(s(T))) - \log V(x(s(0))) = \Delta V$, the change in potential energy.
+So $T_1 = \log V(x(s(T))) - \log V(x(s(0))) = \Delta V$, the change in potential energy. This is cancelled by the second term, for the same reason as above.
 
-On the other hand, $T_2$ is calculated as $-\int \nabla \cdot B^*S(F) = \propto -\int u\cdot \nabla V(x) = \int u\cdot F = \int_0^{T} \frac{1}{|v(s(t))|} F(x(s(t)))\cdot v(s(t))dt = \int_0^{s(T)} F(x(s))\cdot v(s) ds = \Delta K$
+On the other hand, $T_2$ is calculated as $-\int \nabla \cdot B^*S(F) = \propto -\int u\cdot \nabla V(x) = \int u\cdot F = \int_0^{T} \frac{1}{|v(s(t))|} F(x(s(t)))\cdot v(s(t))dt = \int_0^{s(T)} F(x(s))\cdot v(s) ds$ which is the change in quadratic kinetic energy.
+
+And again, $E$ is conserved, since we have not changed the field $F$, but just the coordinates.
 
 <!-- invariant under $B^*$, since we haven't changed $F$, only the underlying manifold (is this true?).  -->
 
-So now $W = T_1 + T_2 = \Delta K + \Delta V = \Delta E$, as desired.
+So now $W = T_1 + T_2 = \Delta V - \Delta V = 0 0 \Delta E$, as desired.
 
 
 
@@ -471,14 +476,14 @@ So now $W = T_1 + T_2 = \Delta K + \Delta V = \Delta E$, as desired.
 
 ### Discretization
 
+TODO
+
+<!-- 
 We'd also like to show that if $F = (I\otimes F_2) \circ (F_1 \otimes I)$, where $F_1$ and $F_2$ are the vector fields on two subspaces, then:
 
 $$
 W(F) = W(F_1 \otimes 1) + W(I \otimes F_2)
 $$
 
-It is however not the case that $T_1(F) = T_1(F_1) + T_1(F_2)$, or that $T_2(F) = T_2(F_1) + T_2(F_2)$.
-
-
-
+It is however not the case that $T_1(F) = T_1(F_1) + T_1(F_2)$, or that $T_2(F) = T_2(F_1) + T_2(F_2)$. -->
 
