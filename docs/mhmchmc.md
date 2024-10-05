@@ -445,7 +445,7 @@ And again, $E$ is conserved, since we have not changed the field $F$, but just t
 
 <!-- invariant under $B^*$, since we haven't changed $F$, only the underlying manifold (is this true?).  -->
 
-So now $W = T_1 + T_2 = \Delta V - \Delta V = 0 0 \Delta E$, as desired.
+So now $W = T_1 + T_2 = \Delta V - \Delta V = 0 = \Delta E$, as desired.
 
 
 
