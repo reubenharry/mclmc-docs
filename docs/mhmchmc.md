@@ -408,11 +408,10 @@ We then see that the first term, $-\log \frac{p'(z'(T))}{p'(z'(0))}$, is equal t
 If our original system has a kinetic energy $\log a$, then we see that the first term is the change in kinetic energy (in rescaled time).
 
 We now consider the second term, $\int_{0}^T \nabla \cdot F'(z'(s)) ds$. We find:
-
+<!-- 
 $$
 \int_{0}^T \nabla \cdot F'(z'(s)) ds = \int_{0}^T \nabla \cdot (a(z)F(z'(s))) ds
-$$
-
+$$ -->
 
 $$
 \int \nabla \cdot F' = \int \nabla \cdot (aF)
@@ -422,36 +421,38 @@ $$
 = \int F\cdot\nabla a
 $$
 
-If $\nabla a = v$ (i.e. $\nabla_v a = v$ and $\nabla_x a = 0$), then we have the result that the second term equals the (negative) change in the *standard* kinetic energy, by the work-energy theorem. 
+If $\nabla a = v$ (i.e. $\nabla_v a = v$ and $\nabla_x a = 0$), then we have the result that the second term equals the (negative) change in the kinetic energy, by the work-energy theorem (this applies also for the $\log$ kinetic energy). 
 
-Indeed, for $a=|v|$, we have $\nabla |v| = \frac{v}{|v|}$, and now we do a change of measure to obtain:
+That is, for $a=|v|$, we have $\nabla |v| = \frac{v}{|v|}$, and now we do a change of measure to obtain:
 
 $$
 \int_0^{T} \frac{1}{|v(s(t))|} F(x(s(t)))\cdot v(s(t))dt = \int_0^{s(T)} F(x(s))\cdot v(s) ds = \Delta K
 $$
 
-But we also see that $\int \nabla \cdot F = w(z(T)) - w(z(0))$, simply by the defining property of $w$, so that the second term always cancels the first.
+Alternatively, we see that $\int \nabla \cdot F = w(z(T)) - w(z(0))$, simply by the defining property of $w$, so that the second term always cancels the first, for any ODE.
+
+(Indeed:
+
+$$
+\frac{d W}{d T} = \frac{\frac{d}{dT} p(z(T))}{p(z(T))} + \nabla \cdot F(z(T)) = \frac{1}{p} ( \dot{z} \cdot \nabla p + p \nabla \cdot F ) = \frac{\nabla \cdot (p F)}{p} = 0
+$$
+
+where $p$ is understood to include $\sqrt{g}$, so that the generalized Louville theorem applies in the last step.)
 
 
-Now we finally note that $H$ is conserved by the time rescaling, and since $T_1 = -T_2$, we have $W = 0 = \Delta E$. (Note that this argument does not apply to volume conservation, since points in different parts of the volume move on different clocks).
+Now we finally note that $H$ is conserved by the time rescaling, and since $T_1 = -T_2$, we have $W = 0 = \Delta E$. (Note that volume is *not* conserved, since points in different parts of the volume move on different clocks).
 
 Finally, we consider $B^*S(F)$. Recall that now, $\dot u \propto -(I-uu^T)\nabla V(x) = -\nabla V(x) + (u\cdot \nabla V(x))u$, so for $B^*S(F)(u) =  -\nabla V(x) + (u\cdot \nabla V(x))u$, we calculate that $\nabla\cdot B^*S(F) \propto u\cdot \nabla V(x)$, so that $w \propto V(x)$, since $\frac{d}{dt}V(x) = \nabla V(x) \cdot \dot x = \nabla V(x) \cdot u$. 
 
-So $T_1 = \log V(x(s(T))) - \log V(x(s(0))) = \Delta V$, the change in potential energy. This is cancelled by the second term, for the same reason as above.
+So $T_1 =  V(x(s(T))) -  V(x(s(0))) = \Delta V$, the change in potential energy. This is cancelled by the second term, for the same reason as above.
 
-On the other hand, $T_2$ is calculated as $-\int \nabla \cdot B^*S(F) = \propto -\int u\cdot \nabla V(x) = \int u\cdot F = \int_0^{T} \frac{1}{|v(s(t))|} F(x(s(t)))\cdot v(s(t))dt = \int_0^{s(T)} F(x(s))\cdot v(s) ds$ which is the change in quadratic kinetic energy.
+On the other hand, $T_2$ is calculated as $-\int \nabla \cdot B^*S(F) = \propto -\int u\cdot \nabla V(x) = \int u\cdot F = \int_0^{T} \frac{1}{|v(s(t))|} F(x(s(t)))\cdot v(s(t))dt = \int_0^{s(T)} F(x(s))\cdot v(s) ds$ which is the change in kinetic energy.
 
-And again, $E$ is conserved, since we have not changed the field $F$, but just the coordinates.
+And again, $E$ on the right hand side is still $0$, since it is calculated in terms of the rescaling of time, but not $B$ (energy only makes sense on the cotangent bundle).
 
 <!-- invariant under $B^*$, since we haven't changed $F$, only the underlying manifold (is this true?).  -->
 
 So now $W = T_1 + T_2 = \Delta V - \Delta V = 0 = \Delta E$, as desired.
-
-
-
-
-
-
 
 
 
