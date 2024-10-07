@@ -3,7 +3,38 @@ $$
 \newcommand{\R}{\mathbb{R}}
 $$
 
-#### Summary
+Let $M$ be the configuration manifold, i.e. the manifold on which $x$ is valued. We are concerned with two transformations, $S$, and $v \mapsto \frac{v}{|v|}$, which commute:
+
+$$
+\begin{CD}
+T(T^*M) @>{S(F) = |v|F}>> T(T^*M)\\
+@VVV @VV{B(v)=\frac{v}{|v|}}V \\
+T(S(M)) @>{}>> T(S(M))
+\end{CD}$$
+
+Here, the Sundman transform $S$ is a gauge transform on the outer tangent bundle, which maps $F(z)$ to $|v|F(z)$.
+
+The second transform $B$ is a bundle morphism on the inner bundle, which maps $v$ to $\frac{v}{|v|}$, and can be lifted to the full bundle as $B^*$, in the usual way, by a pushforward map.
+
+Suppose our original ODE, from a Hamiltonian with $K = \log |v|$ is:
+
+$$
+\frac{d}{dt}\begin{bmatrix} x \\ v \end{bmatrix} = \begin{bmatrix} F_x \\ F_v \end{bmatrix} = \begin{bmatrix} \frac{v}{|v|^2} \\ -\nabla V(x) \end{bmatrix}
+$$
+
+Then the ODE for $S(F)$ is:
+
+$$
+\frac{d}{dt}\begin{bmatrix} x \\ v \end{bmatrix} = \begin{bmatrix} S(F)_x \\ S(F)_v \end{bmatrix} = \begin{bmatrix} \frac{v}{|v|} \\ -\nabla V(x)|v| \end{bmatrix}
+$$
+
+and the ODE for $B^*(S(F))$ will be a (matrix) multiplication of $S(F)$ by the Jacobian of the transform $B$. In particular, for the $u$ coordinates: $\frac{du}{dv} = \frac{1}{|v|}(I - \frac{vv^T}{|v|^2})$, so we get:
+
+$$
+\frac{d}{dt}\begin{bmatrix} x \\ u \end{bmatrix} = \begin{bmatrix} B^*(S(F))_x \\ B^*(S(F))_u \end{bmatrix} = \begin{bmatrix} \frac{v}{|v|} \\ -(I-\frac{vv^T}{|v|^2})\nabla V(x) \end{bmatrix} = \begin{bmatrix} u \\ -(I-uu^T)\nabla V(x) \end{bmatrix}
+$$
+
+#### Summary of results
 
 Let $F$ be the vector field for Hamiltonian dynamics with $K=\log |v|$, and $S(F) = |v|F$, $B^*(S(F))$ be the vector field of isokinetic dynamics, and $T_{1,2}$ being the two terms of $W$. $\Delta E$ is the change in total energy along the integral curve of the vector field. $F_x$ is the first $\R^n$ components of $F$, and $F_v$ is the rest (so  $F_v$ is the force in the typical sense of $F = \dot p$ (ignoring mass here)).
 

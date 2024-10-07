@@ -310,7 +310,7 @@ We then use the dual averaging optimization scheme to find an $\epsilon$ which p
 
 We then estimate $L$ by the variance of the distribution, as in the unadjusted case. However, we must now rerun the dual averaging scheme, this time for $L$ fixed and $N_p$ variable.
 
-
+<!-- 
 ## Thereoms about $W = \Delta E$
 
 Let $M$ be the configuration manifold, i.e. the manifold on which $x$ is valued. We are concerned with two transformations, $S$, and $v \mapsto \frac{v}{|v|}$, which commute:
@@ -487,4 +487,4 @@ W(F) = W(F_1 \otimes 1) + W(I \otimes F_2)
 $$
 
 It is however not the case that $T_1(F) = T_1(F_1) + T_1(F_2)$, or that $T_2(F) = T_2(F_1) + T_2(F_2)$. -->
-
+ -->
