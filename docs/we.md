@@ -66,7 +66,7 @@ Let $F$ be the vector field for Hamiltonian dynamics with $K=\log |p|$, and $S(F
 | $F_x$  | canonical of $F$ | $\Delta V$    | $0$ | $\Delta V$ | $\Delta V$
 | $F_p$  | canonical of $F$ | $\Delta K$    | $0$ | $\Delta K$ | $\Delta K$
 | $S(F)_x$  | canonical of $S(F)$ | $\Delta V$    | $0$ | $\Delta V$ | $???$
-| $S(F)_p$  | canonical of $S(F)$ | $2\Delta K (?)$    | $-\Delta K$ | $\Delta K$ | $???$
+| $S(F)_p$  | canonical of $S(F)$ | $2\Delta K$    | $-\Delta K$ | $\Delta K$ | $???$
 | $B^*S(F)_x$  | micro of $B^*S(F)$ | $\Delta V$    | $0$ | $\Delta V$ | $???$
 | $B^*S(F)_u$  | micro of $B^*S(F)$ | $0$    | $\Delta K$ | $\Delta K$ | $???$
 
@@ -172,13 +172,13 @@ So $W(F_x) + W(F_p) = \Delta V + \Delta K = \Delta E \neq 0$.
 | Field    | $\rho \propto \frac{1}{\|v\|}e^{-H}$ | $\log\frac{P(z(0))}{P(z(t))}$ | $-\int \nabla \cdot F$ | $W$ | $\Delta E$
 | -------- | ------- | ------- | ------- | ------- | ------- |
 | $S(F)_x$  | canonical of $S(F)$ | $\Delta V$    | $0$ | $\Delta V$ | $???$
-| $S(F)_p$  | canonical of $S(F)$ | $2\Delta K (?)$    | $-\Delta K$ | $\Delta K$ | $???$
+| $S(F)_p$  | canonical of $S(F)$ | $2\Delta K$    | $-\Delta K$ | $\Delta K$ | $???$
 
 This is the most interesting case. Recall that in this case, the ODE is given by $\begin{bmatrix} x \\ p \end{bmatrix} = \begin{bmatrix} \frac{p}{|p|} \\ -\nabla V(x)|p| \end{bmatrix}$, and the stationary distribution is $\rho \propto \frac{1}{\|v\|}e^{-H}$.
 
 For $S(F)_x$, only $x$ changes, so we get $\Delta V$ for $T_1$. For $T_2$, we get $0$ because the $x$ part of $S(F)_x$ is only a function of $p$ and the rest is $0$, so $\nabla_z \cdot S(F)_x = 0$.
 
-For $S(F)_p$, we observe that $\rho \propto \frac{1}{|p|}e^{-H} = \frac{1}{|p|^2}e^{-V(x)} = 2\Delta K$, recalling that $\log |p|$ is the kinetic energy.
+For $S(F)_p$, we observe that $\rho \propto \frac{1}{|p|}e^{-H} = \frac{1}{|p|^2}e^{-V(x)}$, so that $T_1 = 2\Delta K$, recalling that $\log |p|$ is the kinetic energy.
 
 On the other hand, $T_2$ is $-\Delta K$. To show this, we proceed as follow, using $z'=(x', p')$ to label the variables after the time rescaling, with $z'(t) = z(s(t))$. Then:
 
@@ -230,7 +230,28 @@ We are interested in calculating $w := \int \nabla \cdot B^*G$, because in this 
 
 Using [this formula](https://math.stackexchange.com/questions/2625185/divergence-of-matrix-vector-product), we find that $\nabla \cdot B^*G = (\nabla \cdot \frac{\partial B(z)}{\partial z})G + tr(\frac{\partial B(z)}{\partial z}\nabla G)$ (with definitions of the matrix divergence and vector gradient given on that page).
 
-Noting that $\nabla \cdot B^*G = \frac{dw}{dt} = \nabla w \cdot B^*G$, we see that $w = (\nabla \cdot \frac{\partial B(z)}{\partial z})(\frac{\partial B(z)}{\partial z})^{-1}$, **if** $tr(\frac{\partial B(z)}{\partial z}\nabla G)=0$, otherwise it is not obvious that it exists.
+Noting that $\nabla \cdot B^*G = \frac{dw}{dt} = \nabla w \cdot B^*G$, we see that **if** $tr(\frac{\partial B(z)}{\partial z}\nabla G)=0$, $w = (\nabla \cdot \frac{\partial B(z)}{\partial z})(\frac{\partial B(z)}{\partial z})^{-1} = \nabla \cdot \log \frac{\partial B(z)}{\partial z}$, otherwise it is not obvious that it exists.
 
-For $B(p) = p/|p|$, this is calculable, using the formula $\log (I + uu^T) = Cuu^T$ for some constant $C$, and the formula $(I+uu^T)^{-1} = I - \frac{uu^T}{2}$.
+For $B(p) = p/|p|$, we can do a sanity check to see that we recover the desired result:
+
+$$
+(A + bc^T)^{-1} = A^{-1} - \frac{A^{-1}bc^T A^{-1}}{1+c^T A^{-1} b}
+$$
+
+so
+
+$$
+(\frac{I}{|p|} - \frac{pp^T}{|p|^3})^{-1} = |p|I + \frac{|p|pp^T/|p|^3}{1 - p^Tp/|p|^3}$$
+
+$$
+ = |p|I + \frac{pp^T/|p^2|}{1-p^Tp/|p|^3} = |p|I + \frac{uu^T}{1-u^Tu/|p|}
+$$
+
+ <!-- using the formula $\log (I + uu^T) = Cuu^T$ for some constant $C$. -->
+
+
+
+Note that $\dot u = -(\frac{I}{|p|} - \frac{pp^T}{|p|^3})|p|\nabla V(x)$, so that $\nabla V(x) = -\dot u \frac{1}{|p|}(\frac{\partial B(z)}{\partial z})^{-1} =-\dot u(|p|I + \frac{uu^T}{1-u^Tu/|p|})\frac{1}{|p|} = -\dot u(I + \frac{uu^T}{|p|-u^Tu})$.
+
+ <!-- and the formula $(I+uu^T)^{-1} = I - \frac{uu^T}{2}$. -->
 
