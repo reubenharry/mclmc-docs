@@ -70,7 +70,9 @@ Let $F$ be the vector field for Hamiltonian dynamics with $K=\log |p|$, and $S(F
 | $B^*S(F)_x$  | micro of $B^*S(F)$ | $\Delta V$    | $0$ | $\Delta V$ | $???$
 | $B^*S(F)_u$  | micro of $B^*S(F)$ | $0$    | $\Delta K$ | $\Delta K$ | $???$
 
-### Derivations
+## Derivations
+
+### F
 
 | Field    | $\rho \propto e^{-H}$ | $\log\frac{P(z(0))}{P(z(t))}$ | $-\int \nabla \cdot F$ | $W$ | $\Delta E$
 | -------- | ------- | ------- | ------- | ------- | ------- |
@@ -80,8 +82,7 @@ This case is easy. The flow is incompressible, i.e. $\nabla \cdot F = 0$, so $T_
 
 If the stationary distribution is $\rho \propto \delta (H-c)$, this also works.
 
-##
-
+## S(F)
 
 | Field    | $\rho \propto \frac{1}{\|p\|}\delta(H-c)$ | $\log\frac{P(z(0))}{P(z(t))}$ | $-\int \nabla \cdot F$ | $W$ | $\Delta E$
 | -------- | ------- | ------- | ------- | ------- | ------- |
@@ -121,6 +122,7 @@ $T_2$ is immediately seen to be $-(e^{-w(t)} - e^{-w(0)}) = -\Delta K$.
 
 So again, $W = \Delta E$.
 
+### B(S(F))
 
 | Field    | $\rho \propto e^{-V(x)}\delta(\|u\|^2 - c)$ | $\log\frac{P(z(0))}{P(z(t))}$ | $-\int \nabla \cdot F$ | $W$ | $\Delta E$
 | -------- | ------- | ------- | ------- | ------- | ------- |
@@ -152,6 +154,8 @@ $$
 
 <!-- But we know that $\Delta E$, defined for the dynamics of $S(F)$ is $0$, so $W = \Delta E$ and also $T_2 = -\Delta V$. -->
 
+### x and p updates of F
+
 | Field    | $\rho \propto e^{-H}$ | $\log\frac{P(z(0))}{P(z(t))}$ | $-\int \nabla \cdot F$ | $W$ | $\Delta E$
 | -------- | ------- | ------- | ------- | ------- | ------- |
 | $F_x$  | canonical of $F$ | $\Delta V$    | $0$ | $\Delta V$ | $\Delta V$
@@ -167,7 +171,7 @@ A similar argument applies to $F_p$, where $T_1$ is $\Delta K$ and $T_2$ is $0$.
 
 So $W(F_x) + W(F_p) = \Delta V + \Delta K = \Delta E \neq 0$.
 
-
+### x and p updates of S(F)
 
 | Field    | $\rho \propto \frac{1}{\|v\|}e^{-H}$ | $\log\frac{P(z(0))}{P(z(t))}$ | $-\int \nabla \cdot F$ | $W$ | $\Delta E$
 | -------- | ------- | ------- | ------- | ------- | ------- |
@@ -208,6 +212,7 @@ $$
 
 So $W(S(F)_x) + W(S(F)_p) = \Delta V + \Delta K = \Delta E$.
 
+### x and p updates of B(S(F))
 
 | Field    | $\rho \propto e^{-V(x)}\delta(\|u\|^2 - c)$ | $\log\frac{P(z(0))}{P(z(t))}$ | $-\int \nabla \cdot F$ | $W$ | $\Delta E$
 | -------- | ------- | ------- | ------- | ------- | ------- |
@@ -252,6 +257,8 @@ $$
 
 
 Note that $\dot u = -(\frac{I}{|p|} - \frac{pp^T}{|p|^3})|p|\nabla V(x)$, so that $\nabla V(x) = -\dot u \frac{1}{|p|}(\frac{\partial B(z)}{\partial z})^{-1} =-\dot u(|p|I + \frac{uu^T}{1-u^Tu/|p|})\frac{1}{|p|} = -\dot u(I + \frac{uu^T}{|p|-u^Tu})$.
+
+**Todo**: keep working on this... 
 
  <!-- and the formula $(I+uu^T)^{-1} = I - \frac{uu^T}{2}$. -->
 
