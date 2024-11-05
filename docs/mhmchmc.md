@@ -299,7 +299,7 @@ $$
 
 so we see that the efficiency drops as $d^{-1/4}$.
 
-ESS is maximal at $\mu = 0.41$, corresponding to $P(\mathrm{accept}) = 65 \%$. We then see that the optimal stepsize grows only as $\epsilon \propto d^{1/4}$ instead of $d^{1/2}$ if the efficiency was unimpaired.
+ESS is maximal at $\mu = 0.41$, corresponding to $P(\mathrm{accept}) = 65 \%$. We then see that the optimal step size grows only as $\epsilon \propto d^{1/4}$ instead of $d^{1/2}$ if the efficiency was unimpaired.
 
 Note that this result is different if a higher order integrator is used. For example, using a fourth order integrator $\sigma^2 / d \propto (\epsilon^2/d)^4$ and the optimal setting is $\mu = 0.13$ and $P(\mathrm{accept}) = 80 \%$.
 

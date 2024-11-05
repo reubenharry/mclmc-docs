@@ -133,9 +133,6 @@ $Q = T|\pd{z(z_0)}{z_0}|$ is heat exchange in the sense that if you were to inte
 
 Presumably we can do clever things by appealing to the Crooks fluctuation theorem, which should apply here.
 
-We therefore conclude that the second term is $Q$, in either setting. 
-
-To better understand the sense in which this $Q$ is the familiar notion of heat transfer, observe that for the thermodynamic $Q$, we would expect that $\int dQ = \int TdS = \int d\langle E \rangle - \int\langle dE\rangle = \langle E_t\rangle - \langle E_0\rangle - \int\langle dE\rangle$
 
 !!! Remarks
 
