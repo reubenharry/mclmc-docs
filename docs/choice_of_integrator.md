@@ -12,11 +12,11 @@ with $\lambda \approx 0.19318$. This is referred to as the Mclachlan integrator 
 
 A crucial caveat is that, while for Hamiltonian ODE (i.e. $\frac{d}{dt}x = \{x,H\}$), we have $\mathcal{O}^{1} = e^{\{\cdot, V\}}$ and $\mathcal{O}^{2} = e^{\{\cdot, T\}}$, which are simple to calculate for the standard Hamiltonian, our equation of interest is now
 
-$$\log \mathcal{O}^{1} \equiv \bold{u} \cdot \partial_{x} 
+$$\log \mathcal{O}^{1} \equiv {u} \cdot \partial_{x} 
 $$ 
 
 $$
-\log \mathcal{O}^{2} \equiv - \frac{1}{d-1} \nabla V(\bold{x})^T (\mathbb I - \bold{u} \bold{u}^T)\partial_{\bold{u}} 
+\log \mathcal{O}^{2} \equiv - \frac{1}{d-1} \nabla V({x})^T (\mathbb I - {u} {u}^T)\partial_{{u}} 
 $$
 
 
@@ -25,18 +25,18 @@ $$
 so the form of the updates needs to be rederived appropriately[^1]. This yields the surprisingly involved:
 
 $$
-    \mathcal{O}^1_{\epsilon}(\bold{x}, \bold{u}) = (\bold{x} + \epsilon \bold{u}, \bold{u})
+    \mathcal{O}^1_{\epsilon}({x}, {u}) = ({x} + \epsilon {u}, {u})
 $$
 
 $$
-    \mathcal{O}_{\epsilon}^2(\bold{x}, \bold{u}) = \bigg( \bold{x}, \,
-    \frac{\bold{u} + (\sinh{\delta}+ \bold{e} \cdot \bold{u} (\cosh \delta -1))  }{\cosh{\delta} + \bold{e} \cdot \bold{u} \sinh{\delta}}\bold{e})
+    \mathcal{O}_{\epsilon}^2({x}, {u}) = \bigg( {x}, \,
+    \frac{{u} + (\sinh{\delta}+ {e} \cdot {u} (\cosh \delta -1))  }{\cosh{\delta} + {e} \cdot {u} \sinh{\delta}}{e})
 $$
     
 <!-- , \,
     w \,(\cosh \delta + {e} \cdot u \sinh \delta) \bigg  -->
 
-where $\delta = \epsilon \vert \nabla E(x) \vert / (d-1)$ and $\bold{e} = - \nabla E(x) / \vert \nabla E(x) \vert$.[^2]
+where $\delta = \epsilon \vert \nabla E(x) \vert / (d-1)$ and ${e} = - \nabla E(x) / \vert \nabla E(x) \vert$.[^2]
 
 Derivation
 
@@ -50,7 +50,7 @@ $$
 
 with $s(t) = \int_0^t e^{h(t')} dt'$, so that $\ddot s(t) = \dot h(t) \dot s(t)$, and $\dot u(t) = \frac{\dot s(t)g}{\dot s(t)}+ (u(0) + s(t)g)(-\dot s(t)^{-2})\ddot s(t) = g - u(t)\dot s(t)^{-1}\ddot s(t) = g - \dot h(t)u(t)$.
 
-We now do one more step: *under construction*
+We now do one more step: **under construction: see Tuckerman's book**
 
 <!-- TODO -->
 
@@ -72,8 +72,6 @@ which reduces to the desired result.
 
 
 
-TODO
-
 There is also the variable $r$ which is the logarithm of the energy of the original Hamiltonian system (see [here](/tutorial.md)). We can calculate the integrator for $r$ by using $r = \log \vert v' \vert$, so that $\dot r = -u \nabla V(x)/(d-1)$ (here we use the rescaled $V$ so we have $\frac{1}{d-1}$ instead of $\frac{1}{d}$). This gives the update of $r(t) = r(0) + \log \dot s(t) = \Delta E$. That is, we are able to analytically calculate, up to our discrete approximation, the change in the kinetic energy of the original Hamiltonian system.
 
 [^1]: See the appendix of [Hamiltonian Dynamics with Non-Newtonian Momentum for Rapid Sampling](/references/#microcanonical-hamiltonian-monte-carlo) for a derivation.
@@ -86,30 +84,31 @@ There is also the variable $r$ which is the logarithm of the energy of the origi
 
 Symplectic integrators are argued to be long-term stable, becuase they are the exact Hamiltonian flows of the so-called shadow Hamiltonian, which is for a small stepsize usually similar to the original Hamiltonian. They exactly preserve the shadow Hamiltonian, which forces stability. 
 
-The ESH integrator in the rescaled time is not symplectic, but we will here show that the MCHMC Hamiltonian poseses an extrodinary propery, which also suggests stability. 
-
-Hamiltonian dynamics can equivalently be described with Lagrangian dynamics. The Lagrangian is a Legendre transform of the Hamiltonian:
+We note that Hamiltonian dynamics with kinetic energy $\log |p|$ (which is what we rescale to obtain MCLMC) has an interesting property, of having a Lagrangian proportional to a Hamiltonian. To see this, first recall that the Hamiltonian dynamics are:
 
 $$
-L = {\Pi} \cdot \dot{{x}} - H({x}, {\Pi}) 
+\frac{d}{dt}\begin{bmatrix} x \\ p \end{bmatrix} = \begin{bmatrix} \frac{p}{|p|^2} \\ -\nabla V(x) \end{bmatrix}
+$$
+
+Also recall that a Legendre transform gives us the corresponding Lagrangian:
+
+$$
+L(x, \dot x) = {p} \cdot \dot{{x}} - H({x}, {p}) 
 $$
 
 
-where ${\Pi}$ is to be understood as a function of $\dot{{x}} = \frac{\partial H}{\partial {\Pi}}$.
+where ${p}$ is to be understood as a function of $\dot{{x}} = \frac{\partial H}{\partial {p}}$.
 
-In the present case ${\dot{x}} = \frac{d \Pi}{\vert {\Pi} \vert}$, so we get
-
-$$ L = d - H $$
-
-or since the Lagrangian formalism is invariant to rescaling and shifting:
+We see immediately that the Lagrangian is:
 
 $$
-L' = H
+L' = 1 - H
 $$
 
-This is a very special property: **the Lagrangian equals the Hamiltonian**. The Lagrangian dynamics state that the solution flows are the functional extrema of the action, which is the time integral of the Lagrangian, namely
+
+This is a very special property for the following reason: the Lagrangian dynamics state that the solution flows are the functional extrema of the action, which is the time integral of the Lagrangian, namely
 
 $$S = \int dt L({x}(t), \dot{{x}}(t))$$
 
-In our case, the action equals the expected energy, meaning that the expected energy does not change if we slightly perturb the exact solution. This means that numerical solutions must preserve the expected energy well.
+In our case, under the assumption of ergodicity, the action equals the expected energy, meaning that the expected energy does not change if we slightly perturb the exact solution. This means that numerical solutions must preserve the expected energy well.
 

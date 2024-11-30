@@ -19,7 +19,7 @@ $$
 and $x_i$ is the component of $x$ along a single dimension. $E_{emp}$ is the expectation under the empirical distribution induced by the sampler, i.e. calculating the expectation using the samples. $E$ is the true expectation, which of course we don't in general have access to.
 
 
-The idea of the tuning algorithm is that $Var[E]/d$ is a proxy for bias, because the underlying SDE is energy preserving. We therefore try to minimize $Var[E]/d$.
+The idea of the tuning algorithm is that $Var[E]/d$ (where $E$ is the energy) is a proxy for bias, because the underlying SDE is energy preserving. We therefore try to minimize $Var[E]/d$.
 
 Roughly, we do this by running a chain, keeping a running average of the variance, and updating the step size at each step.
 

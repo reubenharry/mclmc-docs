@@ -44,7 +44,7 @@ $$
 
 where $P$ is the distribution on phase space, and $f$ is the probability density function of the distribution $P$, so that $P(dz) = f(z)dz$. We used a standard result about the determinant of the Jacobian of a map.
 
-??? FT
+<!-- ??? FT
 
     Noting that $\Omega_\tau(F)(z) = -\Omega_\tau(F)(M(U_{F,\tau}(z)))$, we see that:
 
@@ -64,7 +64,11 @@ where $P$ is the distribution on phase space, and $f$ is the probability density
 
     Further, $\langle e^{-\Omega_\tau(F) }\rangle = 1$, so that by Jensen's equality $0 = \log 1 = \log \langle e^{-\Omega_\tau(F) }\rangle \geq \langle \log e^{-\Omega_\tau(F) }\rangle = \langle {-\Omega_\tau(F) }\rangle$.
 
-    This is a dynamical expression related to the second law of thermodynamics: in expectation over starting points, a forward path is more probable than a backwards one.
+    This is a dynamical expression related to the second law of thermodynamics: in expectation over starting points, a forward path is more probable than a backwards one. -->
+
+## Hamilton's equations
+
+
 
 
 ## Relationship to MCMC
@@ -100,16 +104,16 @@ Then given a quantity $H$, such that $p(z)\propto e^{-\beta H}$, consider the ti
 Observe that 
 
 $$
-\frac{d}{dt} H(z,t) = \int \pd{H}{z} F dt + \int \pd{H}{t} dt
+H(z(t_1),t_1) - H(z(t_0),t_0) = \int \pd{H(z(t),t)}{z} F dt + \int \pd{H(z(t),t)}{t} dt
 $$
 
-We view the second term as work, in the sense that it is the change in energy due to the change in $H$, which must be an effect of the world external to the system. This means that the first term is heat.
+We view the second term as work $W$, in the sense that it is the change in energy due to the change in $H$, which must be an effect of the world external to the system. This means that the first term is heat $Q$.
 
 In a Hamiltonian system, $H$ as above is the Hamiltonian, and $\int \pd{H}{z} F dt = \int (\dot p \dot q - \dot p \dot q) dt = 0 = T\int \nabla \cdot F = T|\pd{z(z_0)}{z_0}|$.
 
 
 
-In a canonical isokinetic system, $H = |u| + V(q)$, so that $\int\pd{H}{z} = \int\nabla V(x)\dot x + \int \frac{u^T}{|u|}(uu^T - I)\nabla V(x) = \int u\cdot \nabla V(x) + |u|u\cdot \nabla V(x) - \frac{1}{|u|}u\cdot \nabla V(x) \propto u \cdot \nabla V(x) = T\int \nabla \cdot F = T|\pd{z(z_0)}{z_0}|$.
+In a canonical isokinetic system, $H = |u| + V(q)$, so that $\int\pd{H}{z}Fdt = \int\nabla V(x)\dot x + \int \frac{u^T}{|u|}(uu^T - I)\nabla V(x) = \int u\cdot \nabla V(x) + \int|u|u\cdot \nabla V(x) - \int\frac{1}{|u|}u\cdot \nabla V(x) \propto \int u \cdot \nabla V(x) = T\int \nabla \cdot F = T|\pd{z(z_0)}{z_0}|$.
 
 (As usual, I'm just ignoring all the factors of $d$ which need to be added for correctness).
 

@@ -19,25 +19,24 @@ It turns out that isokinetic dynamics can be formulated in the language of conta
 
 Working on an $(2n+1)$-dimensional manifold $\mathcal{M}$, one starts by providing a contact form, which is a 1-form $\eta$ satisfying $\eta\wedge (d\eta)^n \neq 0$, and a Hamiltonian $H : \mathcal{M} \to \mathbb{R}$.
 
+The Reeb vector field $\xi$ defined uniquely by $\eta(\xi) = 1$ and $d\eta(\xi)=\lambda k:0$.
+
 Then the vector field $X_H$ is uniquely defined by:
 
+$$i_{X_H}\eta = -H$$ 
+
+and 
+
+$$\mathcal{L}_{X_H}\eta = -\xi(H) \eta$$
+
+Using Cartan's formula ($\mathcal{L}_X\omega = di_X\omega + i_Xd\omega$) then gives:
+
 $$
-dH = i_{X_H}d\eta + \xi(H)\eta
+\xi(H)\eta = dH - i_{X_H}d\eta
 $$
 
-??? Derivation
-
-    We start with the defining properties of the contact form, which are given:
-
-    $$i_{X_H}\eta = -H$$ 
-
-    and 
-
-    $$\mathcal{L}_{X_H}\eta = f_H \eta$$
-
-    for some $f_H$, where $\mathcal{L}$ is the Lie derivative.
-
-    The Reeb vector field $\xi$ defined uniquely by $\eta(\xi) = 1$ and $d\eta(\xi)=\lambda k:0$. It can be shown that this implies:
+<!-- 
+     It can be shown that this implies:
 
     $$
     f_H = -\xi(H)
@@ -51,7 +50,7 @@ $$
 
     $$
     = i_{X_H}d\eta + \xi(H)\eta
-    $$
+    $$ -->
 
 #### Contact invariant
 
@@ -63,23 +62,22 @@ is preserved under the flow of $X_H$.
 
 ### Isokinetic contact form
 
-Take $\eta = u_i(\theta)dx^i$ and $H(x,u) = p(x)^{n}$. We then recover isokinetic dynamics, up to a Sundman transform.
+Let our manifold be $S^n \times \mathbb{R}^{n+1}$, with coordinates $(\theta,x)$, and the contact form be $\eta = u_i(\theta)dx^i$, where $u_i$ is a function of the $\theta$ coordinates. 
+
+Let $H(x,u) = p(x)^{1/n}$. We then recover isokinetic dynamics, up to a Sundman transform.
 
 To see this, first note that $d\eta = \frac{\partial u_i}{\partial \theta_\mu}d\theta_\mu\wedge dx^i$, by the normal definition of the exterior derivative. Further, to satisfy the defining condition of the Reeb vector field, we must have $\xi(z)=u^i\frac{\partial}{\partial x^i}$.
 
-TODO: why is $d\eta(\xi)$ 0?
+<!-- TODO: why is $d\eta(\xi)$ 0? -->
 
-Then note that $V = |H|^{-(n+1)}dudx$
+Then note that $V = |H|^{-(n+1)}du\wedge dx$
 
-TODO: clarify this ^^^ - it seems off by a factor of $u$.
+where $du = \Lambda_{i=1}^n du_i$ and $dx = \Lambda_{i=1}^{n+1} dx_i$.
 
-Using Cartan's formula ($\mathcal{L}_X\omega = di_X\omega + i_Xd\omega$), and the fundamental conditions of contact geometry, $\mathcal{L}_{X_H}\eta = -R(H)\eta$ and $\eta(X_H)=-H$, we have:
 
-$$
-d\eta(X_H) + dH = -R(H)\eta
-$$
+<!-- TODO: clarify this ^^^ - it seems off by a factor of $u$. -->
 
-which we can put in $x,
+We can now put $\xi(H)\eta = dH - i_{X_H}d\eta$ in $x,
 \theta$ coordinates directly as:
 
 $$
@@ -95,16 +93,34 @@ $$
 Moreover, $\partial_\mu u_i   X_H^\mu$ is precisely the $\theta$ components of the $X_H$ vector field pushed forward into the $u$ coordinates, so we have
 
 $$
-\dot u = (\delta_{ji}-u_ju_i)\partial_i H 
+\dot u_j = (\delta_{ji}-u_ju_i)\partial_i H 
 $$
 
-For $\dot x$, we use the condition $\eta(X_H)=u_idx^i = -H$ to solve and find $X_H^i(x,\theta) = -u^iH(x)$, so that
+or in vector notation:
+
+$$
+\dot u = (I - uu^T)\nabla H
+$$
+
+For $\dot x$, we use the condition $\eta(X_H)=u_iX_H^i = -H$ to solve and find $X_H^i(x,\theta) = -u^iH(x)$, so that
 
 $$
 \dot x = -uH
 $$
 
-From here, we perform a Sundman transform, with $a = -\frac{1}{H}$, to obtain the isokinetic dynamics.
+From here, we perform a Sundman transform, with $a = -\frac{1}{H}$, to obtain the isokinetic dynamics:
+
+
+$$
+\dot x = u
+$$
+
+$$
+\dot u = -(I - uu^T)\nabla \log H = -\frac{1}{d-1}(I - uu^T)\nabla \log p 
+$$
+
+where $d = n+1$
+
 
 ### Geometric picture
 

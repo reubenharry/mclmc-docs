@@ -3,7 +3,9 @@ $$
 \newcommand{\R}{\mathbb{R}}
 $$
 
-Let $M$ be the configuration manifold, i.e. the manifold on which $x$ is valued. We are concerned with two transformations, $S$, and $p \mapsto \frac{p}{|p|}$, which commute:
+Let $M$ be the configuration manifold, i.e. the manifold on which $x$ is valued. Then the cotangent bundle $P=T^*M$ is the phase space, so the flow field $F$ of an ODE on the phase space lives on $T(T^*M)$.
+
+We are concerned with two transformations, $S$, and $p \mapsto \frac{p}{|p|}$, which commute:
 
 $$
 \begin{CD}
@@ -12,9 +14,7 @@ T(T^*M) @>{S(F) = |p|F}>> T(T^*M)\\
 T(S(M)) @>{}>> T(S(M))
 \end{CD}$$
 
-Here, the Sundman transform $S$ is a gauge transform on the outer tangent bundle, which maps $F(z)$ to $|p|F(z)$.
-
-The second transform $B$ is a bundle morphism on the inner bundle, which maps $p$ to $\frac{p}{|p|}$, and can be lifted to the full bundle as $B^*$, in the usual way, by a pushforward map.
+Here, $S$ maps the field $F(z)$ to $|p|F(z)$. The second transform $B$ is a bundle morphism on the inner bundle, which maps $p$ to $\frac{p}{|p|}$, and can be lifted to the full bundle as $B^*$, in the usual way, by a pushforward map.
 
 Suppose our original ODE, from a Hamiltonian with $K = \log |p|$ is:
 
@@ -58,17 +58,17 @@ Let $G$ be a vector field, or in more general terms, a section of a vector bundl
 
 Let $F$ be the vector field for Hamiltonian dynamics with $K=\log |p|$, and $S(F) = |p|F$, $B^*(S(F))$ be the vector field of isokinetic dynamics, and $T_{1,2}$ being the two terms of $W$. $\Delta E$ is the change in total energy along the integral curve of the vector field. $F_x$ is the first $\R^n$ components of $F$, and $F_p$ is the rest (so  $F_p$ is the force in the typical sense of $F = \dot p$ (ignoring mass here)).
 
-| Field    | $\rho$ | $\log\frac{P(z(0))}{P(z(t))}$ | $-\int \nabla \cdot F$ | $W$ | $\Delta E$
-| -------- | ------- | ------- | ------- | ------- | ------- |
-| $F$  | canonical or micro of $F$ | $\Delta E$    | 0 | $\Delta E$ |  0
-| $S(F)$ | micro of $S(F)$ | $\Delta K$     | $-\Delta K$, so $\Delta V$  | $\Delta E$ | 0
-| $B^*(S(F))$  | micro of $B^*S(F)$ | $\Delta V$    | $\Delta K$ so $-\Delta V$ | $\Delta E$ | 0
-| $F_x$  | canonical of $F$ | $\Delta V$    | $0$ | $\Delta V$ | $\Delta V$
-| $F_p$  | canonical of $F$ | $\Delta K$    | $0$ | $\Delta K$ | $\Delta K$
-| $S(F)_x$  | canonical of $S(F)$ | $\Delta V$    | $0$ | $\Delta V$ | $???$
-| $S(F)_p$  | canonical of $S(F)$ | $2\Delta K$    | $-\Delta K$ | $\Delta K$ | $???$
-| $B^*S(F)_x$  | micro of $B^*S(F)$ | $\Delta V$    | $0$ | $\Delta V$ | $???$
-| $B^*S(F)_u$  | micro of $B^*S(F)$ | $0$    | $\Delta K$ | $\Delta K$ | $???$
+| Field | $\log\frac{P(z(0))}{P(z(t))}$ | $-\int \nabla \cdot F$ | $W$ | $\Delta E$
+| -------- |  ------- | ------- | ------- | ------- |
+| $F$  |  $\Delta E$    | 0 | $\Delta E$ |  0
+| $S(F)$ | $\Delta K$     | $-\Delta K$, so $\Delta V$  | $\Delta E$ | 0
+| $B^*(S(F))$  | $\Delta V$    | $\Delta K$ so $-\Delta V$ | $\Delta E$ | 0
+| $F_x$   | $\Delta V$    | $0$ | $\Delta V$ | $\Delta V$
+| $F_p$  | $\Delta K$    | $0$ | $\Delta K$ | $\Delta K$
+| $S(F)_x$   | $\Delta V$    | $0$ | $\Delta V$ | 
+| $S(F)_p$   | $2\Delta K$    | $-\Delta K$ | $\Delta K$ | 
+| $B^*S(F)_x$   $\Delta V$    | $0$ | $\Delta V$ | $???$
+| $B^*S(F)_u$   $0$    | $\Delta K$ | $\Delta K$ | $???$
 
 ## Derivations
 
@@ -124,11 +124,11 @@ So again, $W = \Delta E$.
 
 ### B(S(F))
 
-| Field    | $\rho \propto e^{-V(x)}\delta(\|u\|^2 - c)$ | $\log\frac{P(z(0))}{P(z(t))}$ | $-\int \nabla \cdot F$ | $W$ | $\Delta E$
+| Field    | $\rho \propto e^{-(d-1)V(x)}\delta(\|u\|^2 - c)$ | $\log\frac{P(z(0))}{P(z(t))}$ | $-\int \nabla \cdot F$ | $W$ | $\Delta E$
 | -------- | ------- | ------- | ------- | ------- | ------- |
 | $B^*(S(F))$  | microcanonical dist of $B^*S(F)$ | $\Delta V$    | $\Delta K$ so $-\Delta V$ | $\Delta E$ | 0
 
-Recall that $\dot u \propto -(I-uu^T)\nabla V(x) = -\nabla V(x) + (u\cdot \nabla V(x))u$, so for $B^*S(F)(u) =  -\nabla V(x) + (u\cdot \nabla V(x))u$, we calculate that $\nabla\cdot B^*S(F) \propto u\cdot \nabla V(x)$, so that $w \propto V(x)$, since $\frac{d}{dt}V(x) = \nabla V(x) \cdot \dot x = \nabla V(x) \cdot u$.(Note that the factor of $d-1$ can easily be included in the potential $p$.)
+Recall that $\dot u \propto -(I-uu^T)\nabla V(x) = -\nabla V(x) + (u\cdot \nabla V(x))u$, so for $B^*S(F)(u) =  -\nabla V(x) + (u\cdot \nabla V(x))u$, we calculate that $\nabla\cdot B^*S(F) = (d-1) u\cdot \nabla V(x)$, so that $w \propto V(x)$, since $\frac{d}{dt}V(x) = \nabla V(x) \cdot \dot x = \nabla V(x) \cdot u$.(Note that the factor of $d-1$ can easily be included in the potential.)
 
 Noting that $|u|$ is constant, we obtain $\rho$ as above.
 
@@ -225,7 +225,7 @@ For $B^*S(F)_u$, we see that the flow stays on the sphere, and so doesn't change
 
 So $W(B^*S(F)_x) + W(B^*S(F)_u) = \Delta V + \Delta K = \Delta E$.
 
-### Understanding $w$ for arbitrary transforms on phase space
+<!-- ### Understanding $w$ for arbitrary transforms on phase space
 
 Suppose we start with a vector field $G$, and have a transformation $B$ on the base manifold of the ODE, which in our case is the phase space $T^*M$. Then the resulting change in the vector field on $T(T^*M)$ is a matrix multiplication by the Jacobian $\frac{\partial B(z)}{\partial z}$, so $B^*(G) = \frac{\partial B(z)}{\partial z}G$.
 
@@ -252,7 +252,6 @@ $$
  = |p|I + \frac{pp^T/|p^2|}{1-p^Tp/|p|^3} = |p|I + \frac{uu^T}{1-u^Tu/|p|}
 $$
 
- <!-- using the formula $\log (I + uu^T) = Cuu^T$ for some constant $C$. -->
 
 
 
@@ -260,5 +259,5 @@ Note that $\dot u = -(\frac{I}{|p|} - \frac{pp^T}{|p|^3})|p|\nabla V(x)$, so tha
 
 **Todo**: keep working on this... 
 
- <!-- and the formula $(I+uu^T)^{-1} = I - \frac{uu^T}{2}$. -->
 
+ -->
