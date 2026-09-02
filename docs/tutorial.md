@@ -14,8 +14,6 @@ $$
 
 # Microcanonical Monte Carlo Tutorial
 
-!!! Note 
-    See the lefthand sidebar for further tutorials, and the righthand sidebar for the contents of this page.
 
 
 ??? Prerequisites
@@ -222,7 +220,7 @@ Moreover, we can study this ODE in its own right, and this is the approach taken
 
 It is no longer symplectic, and no longer has any (direct) relationship to a Hamiltonian.
 
-## Discretization
+## Discretization (integration)
 
 We must convert our differential equation into a discrete process
 
@@ -234,7 +232,108 @@ where $\epsilon$, which has dimensions of time, is the amount forward in time th
 
 The price of discretization is that our dynamics is only approximately equal to the ODE, so $step_\epsilon(x,u) \approx \phi_\epsilon(x,u)$. As $\epsilon \to 0$, they become equal, but the cost of running the algorithm goes up.
 
-See the [section on tuning](/theorydocs/docs/tuning.md) and the [section on the integrator](/theorydocs/docs/choice_of_integrator.md) for more information.
+A crucial caveat is that, while for Hamiltonian ODE (i.e. $\frac{d}{dt}x = \{x,H\}$), we have $\mathcal{O}^{1} = e^{\{\cdot, V\}}$ and $\mathcal{O}^{2} = e^{\{\cdot, T\}}$, which are simple to calculate for the standard Hamiltonian, our equation of interest is now
+
+$$\log \mathcal{O}^{1} \equiv {u} \cdot \partial_{x} 
+$$ 
+
+$$
+\log \mathcal{O}^{2} \equiv - \frac{1}{d-1} \nabla V({x})^T (\mathbb I - {u} {u}^T)\partial_{{u}} 
+$$
+
+
+so the form of the updates needs to be rederived appropriately[^1]. This yields the surprisingly involved:
+
+$$
+    \mathcal{O}^1_{\epsilon}({x}, {u}) = ({x} + \epsilon {u}, {u})
+$$
+
+$$
+    \mathcal{O}_{\epsilon}^2({x}, {u}) = \bigg( {x}, \,
+    \frac{{u} + (\sinh{\delta}+ {e} \cdot {u} (\cosh \delta -1))  }{\cosh{\delta} + {e} \cdot {u} \sinh{\delta}}{e})
+$$
+    
+<!-- , \,
+    w \,(\cosh \delta + {e} \cdot u \sinh \delta) \bigg  -->
+
+where $\delta = \epsilon \vert \nabla E(x) \vert / (d-1)$ and ${e} = - \nabla E(x) / \vert \nabla E(x) \vert$.[^2]
+
+**Derivation**
+
+We wish to solve $\dot u = (\log \mathcal{O}_2)p = -(I - uu^T)(\nabla S(x)/(d − 1)) = \frac{1}{d-1}(-\nabla S(x) + u\cdot \nabla S(x)) u := g - \dot h(t)u(t)$. Note that $x$ is fixed here.
+
+We can solve as 
+
+$$
+u(t) = \frac{u(0) + s(t)g}{\dot s(t)}
+$$
+
+with $s(t) = \int_0^t e^{h(t')} dt'$, so that $\ddot s(t) = \dot h(t) \dot s(t)$, and $\dot u(t) = \frac{\dot s(t)g}{\dot s(t)}+ (u(0) + s(t)g)(-\dot s(t)^{-2})\ddot s(t) = g - u(t)\dot s(t)^{-1}\ddot s(t) = g - \dot h(t)u(t)$.
+
+
+After a few more steps, we solve with 
+
+$$
+s(t) = \frac{a}{b}(\cosh(t\sqrt b) - 1) + \frac{1}{\sqrt{b}}\sinh(t\sqrt b)
+$$
+
+for $a=u(0)\cdot g$ and $b=|g|^2 = |\nabla V(x)|^2/(d-1)$.
+
+Putting this all together, we have
+
+$$
+u(t) = \frac{u(0) + (\frac{a}{b}(\cosh(t\sqrt b) - 1) + \frac{1}{\sqrt{b}}\sinh(t\sqrt b))g}{\cosh(t\sqrt{b}) + \frac{a}{\sqrt{b}}\sinh(t\sqrt{b})}
+$$
+
+which reduces to the desired result.
+
+??? Integrators
+
+    One choice for discretization is the standard 2nd order leapfrog integrator. See [here](/integrators) for background information on deriving integrators.
+
+    The fancier integrator discussed in [Testing and tuning symplectic integrators for Hybrid Monte Carlo algorithm in lattice QCD](/references/#numerical-integrators) turns out to work well in practice.
+
+    $$
+    \mathcal{O} = \mathcal{O}_{\epsilon \lambda}^{1} \circ \mathcal{O}_{\epsilon/2}^{2}\circ \mathcal{O}_{\epsilon (1-2\lambda)}^{1} \circ \mathcal{O}_{\epsilon/2}^{2} \circ \mathcal{O}_{\epsilon \lambda}^{1}
+    $$
+
+    with $\lambda \approx 0.19318$. This is referred to as the Mclachlan integrator in the Blackjax implementation. It is also symplectic.
+
+
+
+??? Stability
+
+    Symplectic integrators are argued to be long-term stable, becuase they are the exact Hamiltonian flows of the so-called shadow Hamiltonian, which is for a small stepsize usually similar to the original Hamiltonian. They exactly preserve the shadow Hamiltonian, which forces stability. 
+
+    We note that Hamiltonian dynamics with kinetic energy $\log |p|$ (which is what we rescale to obtain MCLMC) has an interesting property, of having a Lagrangian proportional to a Hamiltonian. To see this, first recall that the Hamiltonian dynamics are:
+
+    $$
+    \frac{d}{dt}\begin{bmatrix} x \\ p \end{bmatrix} = \begin{bmatrix} \frac{p}{|p|^2} \\ -\nabla V(x) \end{bmatrix}
+    $$
+
+    Also recall that a Legendre transform gives us the corresponding Lagrangian:
+
+    $$
+    L(x, \dot x) = {p} \cdot \dot{{x}} - H({x}, {p}) 
+    $$
+
+
+    where ${p}$ is to be understood as a function of $\dot{{x}} = \frac{\partial H}{\partial {p}}$.
+
+    We see immediately that the Lagrangian is:
+
+    $$
+    L' = 1 - H
+    $$
+
+
+    This is a very special property for the following reason: the Lagrangian dynamics state that the solution flows are the functional extrema of the action, which is the time integral of the Lagrangian, namely
+
+    $$S = \int dt L({x}(t), \dot{{x}}(t))$$
+
+    In our case, under the assumption of ergodicity, the action equals the expected energy, meaning that the expected energy does not change if we slightly perturb the exact solution. This means that numerical solutions must preserve the expected energy well.
+
+<!-- See the [section on tuning](/theorydocs/docs/tuning.md) and the [section on the integrator](/theorydocs/docs/choice_of_integrator.md) for more information. -->
 
 ## Stochasticity
 
@@ -260,6 +359,38 @@ which means that the correlation between $u$ and the momentum at a time $n\cdot\
 These stochastic jumps are applied to the discrete random walk obtained from the ODE. However, it is natural to ask if one can formulate a *stochastic differential equation* (SDE) for which the discretization results in this same random walk. The benefit is that one can then analyze the properties of the SDE using more abstract tools. That is the topic of [Microcanonical Langevin Monte Carlo](https://arxiv.org/pdf/2303.18221.pdf). 
 
 
+## Case study in low dimensions
+
+Hamiltonian dynamics conserve the energy, which for the microcanonical case in 1D is equal to:
+
+$$
+    E = \log \Pi(t) - \log p(x(t))
+$$
+
+so that
+
+$$
+    \Pi(t) \propto 1/p(x(t)).
+$$
+
+We will take the initial condition $x(0) = -\infty$ with the proportionality constant equals 1 in the above relation and periodic boundary conditions at infinity. The Hamilton's equation for the velocity gives $\dot{x} = 1/p(x(t)$, so for $0 \leq t \leq 1$:
+
+$$
+    t = \int_{-\infty}^{x(t)} p(x) dx = P(X < x(t))
+$$
+
+and the general solution is
+
+$$
+    x(t) = \mathrm{CDF}^{-1}(t \, \mathrm{mod} \, 1).
+$$
+
+With some $\epsilon$ stepsize in time, this is the improved inverse transform sampling[^1], where a random number generator was replaced by a low-discrepancy sequence[^2] generator, namely the additive recurrence. As such, it is very efficient and has $ESS > 1$. This property persists in dimensions $d = 2$ and $d = 3$ as is shown in Figure 1 with the standard Gaussian target in various dimensions.
+
+![Figure 1](img/ess_low_dimensions.png)
+
+[^1]: https://en.wikipedia.org/wiki/Inverse_transform_sampling
+[^2]: https://en.wikipedia.org/wiki/Low-discrepancy_sequence
 
 
 <!-- This takes us out of the symplectic (Hamiltonian) setting, and indeed the eventual resulting SDE will have a stationary distribution that does not resemble -->
@@ -267,3 +398,56 @@ These stochastic jumps are applied to the discrete random walk obtained from the
 <!-- The consequence of this is that the integrator must be rederived, using the standard  -->
 
 
+## Derivation of MCLMC from the isokinetic method
+
+As it turns out, one can derive the MCLMC ODE in a number of ways. One is to start by assuming the constraint that the norm of $p$ is constant with time.
+
+This was first done in the Molecular Dynamics community, under the name of the *isokinetic* method. (The authors of MCLMC became aware of this connection sometime after their original papers).
+
+The idea is simply that we take Hamiltonian dynamics (with the potential energy $S$ being the log likelihood of the target distribution as usual, and $M=1$) and add a constraint that $\frac{d}{dt}(p^Tp)=0$ (by a Lagrange multiplier in the normal fashion):
+
+$$
+\frac{d}{dt}\begin{bmatrix}
+q \\
+p
+\end{bmatrix}
+= \begin{bmatrix}
+p \\
+-\nabla S(x) - \xi p
+\end{bmatrix}
+$$
+
+Then the constraint implies that $0 = p^T\dot p=p^T(-\nabla S(x) - \xi p)$ so that $\xi = -p^T(\nabla S(x))(p^Tp)^{-1}$. Putting this back into the equation:
+
+$$
+\frac{d}{dt}\begin{bmatrix}
+q \\
+p
+\end{bmatrix}
+= \begin{bmatrix}
+p \\
+-\nabla S(x) +p^T(\nabla S(q))(p^Tp)^{-1}p
+\end{bmatrix}$$
+
+$$
+= \begin{bmatrix}
+p \\
+(I - p(p^T(p^Tp)^{-1})) (-\nabla S(q))
+\end{bmatrix}$$
+
+$$
+= \begin{bmatrix}
+p \\
+(I - \mathcal{P}(p)) (-\nabla S(q))
+\end{bmatrix} \\
+$$
+
+where $\mathcal{P}$ is the projection operator onto the span of $p$ (note its idempotency).
+
+We can derive the stationary distribution (see the [references](references/)) from the ansatz $\rho(p,q) = e^{-w(p,q)}f(p^Tp)$, which after use of the continuity equation and some algebra gives:
+
+$$
+\rho(p,q) \propto e^{-\frac{(d-1)S(q)}{||p||^2}}\delta(||p|| - ||p_0||)
+$$
+
+From here, we recover the MCLMC dynamics as given in the [MCLMC paper](https://arxiv.org/pdf/2303.18221.pdf) by setting the initial $||p_0||$ to $1$. Further, we rescale $S \mapsto S/(d-1)$.

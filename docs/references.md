@@ -16,6 +16,12 @@
 
 [Microcanonical Langevin Monte Carlo](https://arxiv.org/pdf/2303.18221.pdf)
 
+[Metropolis Adjusted Microcanonical Hamiltonian Monte Carlo](https://proceedings.neurips.cc/paper_files/paper/2025/file/1643a654fdd055185a358444fd15d33f-Paper-Conference.pdf)
+
+## Unadjusted Gradient Based MCMC
+
+[Practical and Scalable Hamiltonian Monte Carlo Without the Metropolis Test](https://arxiv.org/pdf/2412.08876)
+
 ### Isokinetic Molecular Dynamics
 
 [Algorithms and novel applications based on the isokinetic ensemble. I. Biophysical and path integral molecular dynamics](https://pubs.aip.org/aip/jcp/article-abstract/118/6/2510/438540/Algorithms-and-novel-applications-based-on-the)
@@ -23,17 +29,17 @@
 [Molecular Dynamics With Deterministic and Stochastic Numerical Methods](https://link.springer.com/book/10.1007/978-3-319-16375-8)
 
 
-## Sequential Monte Carlo Samplers
+<!-- ## Sequential Monte Carlo Samplers
 
 [Overview (Probabilistic Machine Learning: Advanced Topics)](https://probml.github.io/pml-book/book2.html)
 
-[A detailed introduction](https://www.stats.ox.ac.uk/~doucet/delmoral_doucet_jasra_sequentialmontecarlosamplersJRSSB.pdf)
+[A detailed introduction](https://www.stats.ox.ac.uk/~doucet/delmoral_doucet_jasra_sequentialmontecarlosamplersJRSSB.pdf) -->
 
 ## Numerical Integrators
 
 [Testing and tuning symplectic integrators for Hybrid Monte Carlo algorithm in lattice QCD](https://arxiv.org/pdf/hep-lat/0505020.pdf)
 
-## Differential Geometry
+<!-- ## Differential Geometry
 
 Purely mathematical introductions tend to be too rigorous for the present purposes, so notes on general relativity (which has differential geometry as its mathematical backbone) are recommended.
 
@@ -41,4 +47,4 @@ Purely mathematical introductions tend to be too rigorous for the present purpos
 
 [General Relativity (Jetzer, Hähl)](http://sns.ias.edu/~haehl/files/GR1.pdf), part III[^1].
 
-[^1]: The notation of [Microcanonical Langevin Monte Carlo](https://arxiv.org/pdf/2303.18221.pdf) aligns with this book, so it is a useful reference point for the derivations.
+[^1]: The notation of [Microcanonical Langevin Monte Carlo](https://arxiv.org/pdf/2303.18221.pdf) aligns with this book, so it is a useful reference point for the derivations. -->

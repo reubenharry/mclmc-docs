@@ -1,10 +1,15 @@
 ## Installation
 
-MCLMC is available in Blackjax, so first install it:
+### Blackjax
+
+MCLMC are LAPS are available in Blackjax, so first install it:
 
 `pip install blackjax`
 
-Then see https://blackjax-devs.github.io/sampling-book/algorithms/mclmc.html for comprehensive instructions on how to run the algorithm.
+Then see https://blackjax-devs.github.io/sampling-book/algorithms/mclmc/ and https://blackjax-devs.github.io/sampling-book/algorithms/laps/ for instructions on how to run the algorithms.
 
-!!! Note
-    MCLMC is not designed to run in 1 dimension. Its best performance is for high dimensional unimodal problems, but it should perform well in most settings.
+### NumPyro and PyMC
+
+Both NumPyro and PyMC have support for extracting their densities into functions, which can then be used with Blackjax. See [here](https://blackjax-devs.github.io/blackjax/examples/howto_use_numpyro.html) and [here](https://blackjax-devs.github.io/blackjax/examples/howto_use_pymc.html).
+
+NumPyro now also supports external samplers. See [here](https://github.com/juanitorduz/numpyro/blob/21ebd13f1cf18500f73639301f96c0c18bdc2069/notebooks/source/other_samplers.ipynb) for an example.

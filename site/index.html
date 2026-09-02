@@ -23,7 +23,7 @@
     
     
       
-        <title>Home - MCLMC</title>
+        <title>Home - Next Generation Samplers</title>
       
     
     
@@ -84,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#microcanonical-monte-carlo" class="md-skip">
+        <a href="#next-generation-sampling-algorithms" class="md-skip">
           Skip to content
         </a>
       
@@ -100,7 +100,7 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="MCLMC" class="md-header__button md-logo" aria-label="MCLMC" data-md-component="logo">
+    <a href="." title="Next Generation Samplers" class="md-header__button md-logo" aria-label="Next Generation Samplers" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 6a3.99 3.99 0 0 1-3 3.86V17a5 5 0 0 1-5 5 5 5 0 0 1-5-5v-5l5 5H7a3 3 0 0 0 3 3 3 3 0 0 0 3-3V9.86c-1.77-.46-3-2.06-3-3.89C10 3.76 11.8 2 14 2c2.22 0 4 1.79 4 4m-4 2a2 2 0 0 0 2-2 2 2 0 0 0-2-2 2 2 0 0 0-2 2 2 2 0 0 0 2 2"/></svg>
@@ -114,7 +114,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            MCLMC
+            Next Generation Samplers
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -379,13 +379,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="MCLMC" class="md-nav__button md-logo" aria-label="MCLMC" data-md-component="logo">
+    <a href="." title="Next Generation Samplers" class="md-nav__button md-logo" aria-label="Next Generation Samplers" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 6a3.99 3.99 0 0 1-3 3.86V17a5 5 0 0 1-5 5 5 5 0 0 1-5-5v-5l5 5H7a3 3 0 0 0 3 3 3 3 0 0 0 3-3V9.86c-1.77-.46-3-2.06-3-3.89C10 3.76 11.8 2 14 2c2.22 0 4 1.79 4 4m-4 2a2 2 0 0 0 2-2 2 2 0 0 0-2-2 2 2 0 0 0-2 2 2 2 0 0 0 2 2"/></svg>
 
     </a>
-    MCLMC
+    Next Generation Samplers
   </label>
   
     <div class="md-nav__source">
@@ -1089,36 +1089,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Overview
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contents-of-this-website" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Contents of this website
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -1142,7 +1112,22 @@
   
 
 
-<h1 id="microcanonical-monte-carlo">Microcanonical Monte Carlo<a class="headerlink" href="#microcanonical-monte-carlo" title="Permanent link">&para;</a></h1>
+<h1 id="next-generation-sampling-algorithms">Next Generation Sampling Algorithms<a class="headerlink" href="#next-generation-sampling-algorithms" title="Permanent link">&para;</a></h1>
+<p>The ability to sample from a differentiable density function in a black-box fashion is useful in a vast range of application domains.</p>
+<p>For the last decade, that black box solution has been the No-U-Turn Sampler (NUTS). In more recent years, there has been work to surpass NUTS. This website documents the next-generation samplers from Uroš Seljak's group[1].</p>
+<p>^[1] This work was funded by the <a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=2311559">NSF</a></p>
+<h1 id="is-there-something-i-can-use-today-that-is-better-than-nuts">Is there something I can use today that is better than NUTS?<a class="headerlink" href="#is-there-something-i-can-use-today-that-is-better-than-nuts" title="Permanent link">&para;</a></h1>
+<p>Yes! The answer depends on whether you have a high dimensional problem where you can only run a few chains in parallel, or a lower dimensional problem where you can run <em>as many chains as the number of independent samples you want</em>.</p>
+<p>For the few-chain setting, we recommend <a href="https://blackjax-devs.github.io/sampling-book/algorithms/mclmc.html">Microcanonical Langevin Monte Carlo</a>.</p>
+<p><a href="references/#microcanonical-hamiltonian-monte-carlo">here</a>, which you can read about more at that link.</p>
+<p>For the many-chain setting, we recommend the <a href="references/#microcanonical-hamiltonian-monte-carlo">Late Adjusted Parallel Sampler</a>, which you can read about more <a href="">here</a>.</p>
+<p>Both should work out of the box, but if you have problems or questions, you are welcome to reach out and we can advise.</p>
+<p>two developments:</p>
+<ul>
+<li>a better understanding of how to use HMC without the Metropolis-Hastings acceptance step: this leads to large improvements in <strong>single chain performance</strong></li>
+<li>a better understanding of how to take advantage of multiple chains: this leads to large improvements in <strong>parallel performance</strong></li>
+</ul>
+<p>The algorithm we recommend </p>
 <p><a href="references/#microcanonical-hamiltonian-monte-carlo">Microcanonical Hamiltonian Monte Carlo</a> (MCHMC) and its cousin <a href="references/#microcanonical-hamiltonian-monte-carlo">Microcanonical Langevin Monte Carlo</a> (MCLMC) constitute a new sampling algorithm for distributions with differentiable log likelihoods, introduced with the goal of replacing the current state of the art differentiable sampler, NUTS.</p>
 <p>A Python implementation is available in Blackjax: <a href="https://blackjax-devs.github.io/sampling-book/algorithms/mclmc.html">https://blackjax-devs.github.io/sampling-book/algorithms/mclmc.html</a></p>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
@@ -1237,8 +1222,6 @@
       <script src="assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="docs/javascripts/mathjax.js"></script>
-      
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       

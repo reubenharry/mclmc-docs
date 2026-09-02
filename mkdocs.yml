@@ -1,4 +1,4 @@
-site_name: MCLMC
+site_name: Next Generation Samplers
 
 
 site_url: https://zesty-daffodil-572c7d.netlify.app/
@@ -111,7 +111,6 @@ markdown_extensions:
 
 extra_javascript:
   - docs/javascripts/mathjax.js
-  - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
 
 extra:
@@ -129,24 +128,26 @@ nav:
     - Home: index.md
   - Get Started: getstarted.md
   - Theory: 
-    - Basics: tutorial.md
-    - Choice of Integrator: choice_of_integrator.md
-    - Implementation: implementation.md
-    - Tuning: tuning.md
-    - ODE on a manifold: diffgeo.md
-    - SDE on a manifold: sde.md
+    - Overview: overview.md
+    - MCLMC: tutorial.md
+    - LAPS: laps.md
+    # - Choice of Integrator: choice_of_integrator.md
+    # - Implementation: implementation.md
+    # - Tuning: tuning.md
+    # - ODE on a manifold: diffgeo.md
+    # - SDE on a manifold: sde.md
     # - Adjusted MCLMC: mhmchmc.md
     # - Ensemble algorithm: ensemble.md
     # - Sequential Monte Carlo: mclmcsmc.md
     # - Geometry: geometricintuition.md
-    - Low-Dimensional Case: low_d.md
-    - Alternative formulations: deriving.md
-  - Applications: applications.md
-  - Supplementary material:
-    - Index: supplementary.md
-    - Statistical Mechanics: classical.md
-    - Integrators: integrators.md
-    - Differential Geometry: geometry.md
-    - Sequential Monte Carlo: smc.md
+    # - Low-Dimensional Example: low_d.md
+    # - Alternative formulations: deriving.md
+  # - Applications: applications.md
+  # - Supplementary material:
+  #   - Index: supplementary.md
+  #   - Statistical Mechanics: classical.md
+  #   - Integrators: integrators.md
+    # - Differential Geometry: geometry.md
+    # - Sequential Monte Carlo: smc.md
   - References: references.md
   
